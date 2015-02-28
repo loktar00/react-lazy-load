@@ -17,6 +17,7 @@
     "url": "https://github.com/loktar00/react-lazy-load.git"
   },
   "author": "Jason Brown",
+  "emaul": "loktar00@gmail.com",
   "license": "MIT",
   "peerDependencies": {
     "react": "^0.12.2"
