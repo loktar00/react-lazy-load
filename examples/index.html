@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<div id='test'>test</div>
+    <div id="content"></div>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react-with-addons.js"></script>
+
+    <script type="text/jsx">
+
+    var LazyLoad = React.createClass({
+            displayName: 'LazyLoad',
+            propTypes: {
+                height: React.PropTypes.string
+            },
+            getInitialState: function() {
+                return {
+                    visible: false 
+                };
+            },
+            handleScroll: function() {
+                var bounds = this.getDOMNode().getBoundingClientRect(),
+                    scrollTop = window.pageYOffset,
+                    top = bounds.top + scrollTop,
+                    height = bounds.bottom - bounds.top;
+
+                if(top < (scrollTop + window.innerHeight) && (top + height) > scrollTop){
+                    this.setState({visible: true});
+                    this.handleVisible();
+                }
+            },
+            handleVisible: function() {
+                window.removeEventListener('scroll', this.handleScroll);
+                window.removeEventListener('resize', this.handleScroll);
+            },
+            componentDidMount: function() {
+                window.addEventListener('scroll', this.handleScroll);
+                window.addEventListener('resize', this.handleScroll);
+                this.handleScroll();
+            },
+            render: function () {
+                var renderEl = '',
+                    cx = React.addons.classSet,
+                    preloadHeight = {
+                        height: this.props.height
+                    },
+                    classes = cx({
+                        'lazy-load': true,
+                        'lazy-load-visible': this.state.visible
+                    });
+
+                return (
+                    <div style={preloadHeight} className={classes}>
+                        {this.state.visible ? this.props.children : ''}
+                    </div>
+                );
+            }
+        });
+
+        var Application = React.createClass({
+            displayName: 'Application',
+            render: function() {
+                return (
+                    <div>
+                        Scroll to load images.
+                        <div className='filler'></div>
+                        <LazyLoad height='762px'>
+                            <img src='http://apod.nasa.gov/apod/image/1502/HDR_MVMQ20Feb2015ouellet1024.jpg' />
+                        </LazyLoad>
+                        <div className='filler'></div>
+                        <LazyLoad height='683px'>
+                            <img src='http://apod.nasa.gov/apod/image/1502/2015_02_20_conj_bourque1024.jpg' />
+                        </LazyLoad>
+                        <div className='filler'></div>
+                        <LazyLoad height='480px'>
+                            <img src='http://apod.nasa.gov/apod/image/1502/MarsPlume_jaeschke_480.gif' />
+                        </LazyLoad>
+                        <div className='filler'></div>
+                        <LazyLoad height='720px'>
+                            <img src='http://apod.nasa.gov/apod/image/1502/ToadSky_Lane_1080_annotated.jpg' />
+                        </LazyLoad>
+                        <div className='filler'></div>
+                    </div>
+                );
+            }
+        });
+
+        React.render(<Application />, document.getElementById('content'));
+    </script>
+</body>
+</html>

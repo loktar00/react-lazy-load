@@ -1,0 +1,15 @@
+.filler {
+    height:300px;
+}
+
+/* Fade in loaded elements */
+.lazy-load {
+   opacity:0;
+    -webkit-transition: all 2s ease-in-out;
+    -moz-transition: all 2s ease-in-out;
+    transition: all 2s ease-in-out;
+}
+
+.lazy-load-visible {
+   opacity:1;
+}
