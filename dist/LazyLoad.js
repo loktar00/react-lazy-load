@@ -45,9 +45,9 @@ var React = require('react/addons'),
                 });
 
             return (
-                <div style={preloadHeight} className={classes}>
-                    {this.state.visible ? this.props.children : ''}
-                </div>
+                React.createElement("div", {style: preloadHeight, className: classes}, 
+                    this.state.visible ? this.props.children : ''
+                )
             );
         }
     });
