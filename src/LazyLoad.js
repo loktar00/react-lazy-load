@@ -30,6 +30,9 @@ var React = require('react/addons'),
             window.addEventListener('resize', this.handleScroll);
             this.handleScroll();
         },
+        componentDidUpdate: function() {
+            if(!this.state.visible) this.handleScroll();
+        },
         componentWillUnmount: function() {
             this.handleVisible();
         },
