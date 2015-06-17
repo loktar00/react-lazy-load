@@ -20,6 +20,9 @@
   "author": "Jason Brown",
   "emaul": "loktar00@gmail.com",
   "license": "MIT",
+  "dependencies": {
+    "classnames": "^2.1.2"
+  },
   "peerDependencies": {
     "react": "^0.13.x"
   },
