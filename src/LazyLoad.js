@@ -1,4 +1,5 @@
-var ClassNames = require('classnames'),
+var React = require('react'),
+    ClassNames = require('classnames'),
 
     LazyLoad = React.createClass({
         displayName: 'LazyLoad',
