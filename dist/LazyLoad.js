@@ -17,7 +17,7 @@ var React = require('react'),
                 top = bounds.top + scrollTop,
                 height = bounds.bottom - bounds.top;
 
-            if(top < (scrollTop + window.innerHeight) && (top + height) > scrollTop){
+            if(top === 0 || (top < (scrollTop + window.innerHeight) && (top + height) > scrollTop)){
                 this.setState({visible: true});
                 this.handleVisible();
             }
