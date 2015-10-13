@@ -12,7 +12,7 @@ var React = require('react'),
             };
         },
         handleScroll: function() {
-            var bounds = this.getDOMNode().getBoundingClientRect(),
+            var bounds = React.findDOMNode(this).getBoundingClientRect(),
                 scrollTop = window.pageYOffset,
                 top = bounds.top + scrollTop,
                 height = bounds.bottom - bounds.top;
