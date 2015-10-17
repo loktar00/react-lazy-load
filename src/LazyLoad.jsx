@@ -40,7 +40,8 @@ export default class LazyLoad extends Component {
   }
   render() {
     const elStyles = { height: this.props.height };
-    const elClasses = classNames('lazy-load', {
+    const elClasses = classNames({
+      'lazy-load': true,
       'lazy-load-visible': this.state.visible,
     });
 
