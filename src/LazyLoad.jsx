@@ -3,7 +3,10 @@ import classNames from 'classnames';
 
 export default class LazyLoad extends Component {
   static propTypes = {
-    height: PropTypes.string,
+    height: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
   }
   state = {
     visible: false,

@@ -10,30 +10,29 @@ npm install --save react-lazy-load
 
 ## Usage
 
-```
-var React = require('react');
+```jsx
+import React from 'react';
+import LazyLoad from 'react-lazy-load';
 
-var LazyLoad = require('react-lazy-load')
-
-
-// In your render
-
-return (
-    <LazyLoad>
+class MyComponent {
+  render() {
+    return (
+      <LazyLoad>
         <div>some content</div>
-    </LazyLoad>;
-)
-
+      </LazyLoad>
+    );
+  }
+}
 ```
 
 ## Props
 
-### height="String"
+### height={String|Number}
 
 This is used to set the elements height even when it contains no content.
 
-```
-<LazyLoad height='100px'>
-    <div>some content</div>
-</LazyLoad>;
+```jsx
+<LazyLoad height={100}>
+  <div>some content</div>
+</LazyLoad>
 ```
