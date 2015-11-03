@@ -1,4 +1,5 @@
-import React, { Component, findDOMNode, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 
 export default class LazyLoad extends Component {
