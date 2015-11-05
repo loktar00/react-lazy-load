@@ -3,16 +3,6 @@ import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 
 export default class LazyLoad extends Component {
-  static propTypes = {
-    height: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-    threshold: PropTypes.number
-  }
-  static defaultProps = {
-    threshold: 0,
-  }
   state = {
     visible: false,
   }
@@ -50,7 +40,9 @@ export default class LazyLoad extends Component {
     }
   }
   render() {
-    const elStyles = { height: this.props.height };
+    const elStyles = {
+      height: this.props.height
+    };
     const elClasses = classNames({
       'lazy-load': true,
       'lazy-load-visible': this.state.visible,
@@ -63,3 +55,14 @@ export default class LazyLoad extends Component {
     );
   }
 }
+
+LazyLoad.propTypes = {
+  height: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  threshold: PropTypes.number,
+};
+LazyLoad.defaultProps = {
+  threshold: 0,
+};
