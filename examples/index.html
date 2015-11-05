@@ -9,7 +9,8 @@
 <div id='test'>test</div>
     <div id="content"></div>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react-with-addons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.2/react-with-addons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.2/react-dom.js"></script>
     <script src="../dist/LazyLoad.js"></script>
 
     <script type="text/jsx">
@@ -41,7 +42,7 @@
             }
         });
 
-        React.render(<Application />, document.getElementById('content'));
+        ReactDOM.render(<Application />, document.getElementById('content'));
     </script>
 </body>
 </html>
