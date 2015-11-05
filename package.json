@@ -1,13 +1,19 @@
 {
   "name": "react-lazy-load",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Simple lazy loading component built with react",
-  "main": "dist/LazyLoad.js",
+  "main": "./lib/LazyLoad.js",
   "files": [
-    "dist/LazyLoad.js"
+    "dist",
+    "lib"
   ],
   "scripts": {
-    "build": "NODE_ENV=production node_modules/.bin/webpack",
+    "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
+    "build:lib": "babel --stage 0 src --out-dir lib",
+    "build:umd": "webpack src/LazyLoad.jsx dist/LazyLoad.js --config webpack.config.development.js",
+    "build:umd:min": "webpack src/LazyLoad.jsx dist/LazyLoad.min.js --config webpack.config.production.js",
+    "clean": "rimraf lib dist",
+    "prepublish": "npm run clean && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -20,11 +26,21 @@
     "type": "git",
     "url": "https://github.com/loktar00/react-lazy-load.git"
   },
-  "author": "Jason Brown",
-  "email": "loktar00@gmail.com",
+  "author": {
+    "name": "Jason Brown",
+    "email": "loktar00@gmail.com",
+    "url": "https://twitter.com/loktar00"
+  },
+  "contributors": [
+    {
+      "name": "Sergey Laptev",
+      "email": "iamsergeylaptev@gmail.com",
+      "url": "https://twitter.com/iamsergeylaptev"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
-    "classnames": "^2.1.5"
+    "classnames": "^2.2.0"
   },
   "devDependencies": {
     "babel-core": "^5.8.25",
