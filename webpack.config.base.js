@@ -4,31 +4,31 @@ var reactExternal = {
   root: 'React',
   commonjs2: 'react',
   commonjs: 'react',
-  amd: 'react',
+  amd: 'react'
 };
 
 var reactDOMExternal = {
   root: 'ReactDOM',
   commonjs2: 'react-dom',
   commonjs: 'react-dom',
-  amd: 'react-dom',
+  amd: 'react-dom'
 };
 
 module.exports = {
   externals: {
     'react': reactExternal,
-    'react-dom': reactDOMExternal,
+    'react-dom': reactDOMExternal
   },
   module: {
     loaders: [
-      { test: /\.jsx?$/, loader: 'babel-loader?stage=0', exclude: /node_modules/ },
+      { test: /\.jsx?$/, loader: 'babel-loader?stage=0', exclude: /node_modules/ }
     ],
   },
   output: {
     library: 'LazyLoad',
-    libraryTarget: 'umd',
+    libraryTarget: 'umd'
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
-  },
+    extensions: ['', '.js', '.jsx']
+  }
 };
