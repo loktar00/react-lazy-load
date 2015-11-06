@@ -3,12 +3,12 @@ import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
 
 export default class LazyLoad extends Component {
-  state = {
-    visible: false,
-  }
   constructor(props) {
     super(props);
     this.onWindowScroll = this.onWindowScroll.bind(this);
+  }
+  state = {
+    visible: false,
   }
   componentDidMount() {
     window.addEventListener('scroll', this.onWindowScroll);
@@ -41,7 +41,7 @@ export default class LazyLoad extends Component {
   }
   render() {
     const elStyles = {
-      height: this.props.height
+      height: this.props.height,
     };
     const elClasses = classNames({
       'lazy-load': true,
@@ -49,7 +49,7 @@ export default class LazyLoad extends Component {
     });
 
     return (
-      <div style={elStyles} className={elClasses}>
+      <div className={elClasses} style={elStyles}>
         {this.state.visible && this.props.children}
       </div>
     );
@@ -57,6 +57,7 @@ export default class LazyLoad extends Component {
 }
 
 LazyLoad.propTypes = {
+  children: PropTypes.node.isRequired,
   height: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
