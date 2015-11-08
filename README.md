@@ -44,7 +44,7 @@ This is used to set the elements height even when it contains no content.
 
 ### threshold={Number}
 
-By default images are loaded when they appear on the screen. If you want images to load earlier use threshold parameter. Setting threshold to 200 causes image to load 200 pixels before it appears on viewport.
+By default content is loaded when it appears on the screen. If you want content to load earlier use threshold parameter. Setting threshold to 200 causes image to load 200 pixels before it appears on viewport.
 
 ```jsx
 <LazyLoad threshold={200}>
