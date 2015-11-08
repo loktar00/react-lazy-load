@@ -6,7 +6,8 @@ Really simple component that renders children elements when they enter the viewp
 [![Dependency Status](https://david-dm.org/loktar00/react-lazy-load.svg?style=flat-square)](https://david-dm.org/loktar00/react-lazy-load)
 [![NPM downloads](https://img.shields.io/npm/dm/react-lazy-load.svg?style=flat-square)](https://www.npmjs.com/package/react-lazy-load)
 
-## Install
+## Installation
+React Lazy Load requires **React 0.14 or later.**
 
 ```
 npm install --save react-lazy-load
@@ -15,10 +16,10 @@ npm install --save react-lazy-load
 ## Usage
 
 ```jsx
-import React from 'react';
+import React, { Component } from 'react';
 import LazyLoad from 'react-lazy-load';
 
-class MyComponent {
+class MyComponent extends Component {
   render() {
     return (
       <LazyLoad>
