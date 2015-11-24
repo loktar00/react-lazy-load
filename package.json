@@ -50,7 +50,8 @@
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "style-loader": "^0.13.0",
-    "webpack": "^1.12.2"
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.1"
   },
   "peerDependencies": {
     "react": "^0.14.0"
