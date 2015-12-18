@@ -51,3 +51,13 @@ By default content is loaded when it appears on the screen. If you want content 
   <div>some content</div>
 </LazyLoad>
 ```
+
+### onContentVisible={Function}
+
+A callback function to execute when the content appears on the screen.
+
+```jsx
+<LazyLoad onContentVisible={() => { console.log('content visible'); }}>
+  <div>some content</div>
+</LazyLoad>
+```
