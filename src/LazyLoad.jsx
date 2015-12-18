@@ -26,7 +26,7 @@ export default class LazyLoad extends Component {
     window.removeEventListener('resize', this.onWindowScroll);
   }
   onWindowScroll() {
-    const { threshold, onContentVisible } = this.props;
+    const { onContentVisible, threshold } = this.props;
 
     const bounds = findDOMNode(this).getBoundingClientRect();
     const scrollTop = window.pageYOffset;
@@ -64,11 +64,11 @@ LazyLoad.propTypes = {
   children: PropTypes.node.isRequired,
   height: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.number
+    PropTypes.number,
   ]),
   threshold: PropTypes.number,
-  onContentVisible: PropTypes.func
+  onContentVisible: PropTypes.func,
 };
 LazyLoad.defaultProps = {
-  threshold: 0
+  threshold: 0,
 };
