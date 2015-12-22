@@ -1,18 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 import classNames from 'classnames';
+import ViewportDimensions from './ViewportDimensions';
+
+const viewportDimensions = new ViewportDimensions();
 
 export default class LazyLoad extends Component {
-  constructor(props) {
-    super(props);
-    this.onWindowScroll = this.onWindowScroll.bind(this);
-  }
   state = {
     visible: false,
   }
   componentDidMount() {
-    window.addEventListener('scroll', this.onWindowScroll);
-    window.addEventListener('resize', this.onWindowScroll);
+    this.removeViewportListener = viewportDimensions.addListener(this.onWindowScroll.bind(this));
     this.onWindowScroll();
   }
   componentDidUpdate() {
@@ -27,13 +25,15 @@ export default class LazyLoad extends Component {
     }
   }
   componentWillUnmount() {
-    this.onVisible();
-  }
-  onVisible() {
-    window.removeEventListener('scroll', this.onWindowScroll);
-    window.removeEventListener('resize', this.onWindowScroll);
+    this.removeViewportListener();
   }
   onWindowScroll() {
+    if (this.isInViewport()) {
+      this.setState({ visible: true });
+      this.removeViewportListener();
+    }
+  }
+  isInViewport() {
     const { threshold } = this.props;
 
     const bounds = findDOMNode(this).getBoundingClientRect();
@@ -41,11 +41,8 @@ export default class LazyLoad extends Component {
     const top = bounds.top + scrollTop;
     const height = bounds.bottom - bounds.top;
 
-    if (top === 0 || (top <= (scrollTop + window.innerHeight + threshold)
-                      && (top + height) > (scrollTop - threshold))) {
-      this.setState({ visible: true });
-      this.onVisible();
-    }
+    return (top === 0 || (top <= (scrollTop + window.innerHeight + threshold)
+                      && (top + height) > (scrollTop - threshold)));
   }
   render() {
     const elStyles = {
