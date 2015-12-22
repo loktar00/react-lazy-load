@@ -20,7 +20,7 @@ export default class LazyLoad extends Component {
       this.onWindowScroll();
     } else {
       const { onContentVisible } = this.props;
-      
+
       if (onContentVisible) {
         onContentVisible();
       }

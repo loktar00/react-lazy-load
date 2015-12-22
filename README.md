@@ -3,9 +3,9 @@ React Lazy Load Component
 
 Really simple component that renders children elements when they enter the viewport.
 
-[![Build Status](ttps://travis-ci.org/loktar00/react-lazy-load.svg?style=flat-square)](https://travis-ci.org/loktar00/react-lazy-load.svg?branch=master)
-[![Dependency Status](https://david-dm.org/loktar00/react-lazy-load.svg?style=flat-square)](https://david-dm.org/loktar00/react-lazy-load)
-[![NPM downloads](https://img.shields.io/npm/dm/react-lazy-load.svg?style=flat-square)](https://www.npmjs.com/package/react-lazy-load)
+[![build status](https://img.shields.io/travis/loktar00/react-lazy-load.svg?style=flat-square)](https://travis-ci.org/loktar00/react-lazy-load)
+[![dependency status](https://david-dm.org/loktar00/react-lazy-load.svg?style=flat-square)](https://david-dm.org/loktar00/react-lazy-load)
+[![npm downloads](https://img.shields.io/npm/dm/react-lazy-load.svg?style=flat-square)](https://www.npmjs.com/package/react-lazy-load)
 
 ## Installation
 React Lazy Load requires **React 0.14 or later.**
