@@ -9,7 +9,7 @@ export default class LazyLoad extends Component {
   }
   state = {
     visible: false,
-  }
+  };
   componentDidMount() {
     window.addEventListener('scroll', this.onWindowScroll);
     window.addEventListener('resize', this.onWindowScroll);
