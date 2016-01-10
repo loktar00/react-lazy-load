@@ -1,8 +1,7 @@
-import './style.css'
-
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import LazyLoad from 'react-lazy-load';
+
+import './style.css'
 
 class Application extends Component {
   render() {
@@ -31,4 +30,4 @@ class Application extends Component {
   }
 }
 
-ReactDOM.render(<Application />, document.getElementById('root'));
+export default Application;

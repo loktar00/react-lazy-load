@@ -14,6 +14,9 @@ React Lazy Load requires **React 0.14 or later.**
 npm install --save react-lazy-load
 ```
 
+## Examples
+* [Basic](https://github.com/loktar00/react-lazy-load/tree/master/examples/basic)
+
 ## Usage
 
 ```jsx

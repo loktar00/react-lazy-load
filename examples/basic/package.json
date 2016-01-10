@@ -1,0 +1,38 @@
+{
+  "name": "react-lazy-load-basic-example",
+  "version": "0.0.0",
+  "description": "React Lazy Load basic example",
+  "scripts": {
+    "start": "node -r 'babel-core/register' ./initializers/server/index.js"
+  },
+  "license": "MIT",
+  "bugs": "https://github.com/loktar00/react-lazy-load/issues",
+  "engines": {
+    "node": "^4.0.0",
+    "npm": "^3.0.0"
+  },
+  "dependencies": {
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.4.0",
+    "babel-plugin-react-transform": "^2.0.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "css-loader": "^0.23.1",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "morgan": "^1.6.1",
+    "postcss-bem": "^0.4.1",
+    "postcss-loader": "^0.8.0",
+    "postcss-nested": "^1.0.0",
+    "react-transform-catch-errors": "^1.0.1",
+    "react-transform-hmr": "^1.0.1",
+    "redbox-react": "^1.2.0",
+    "style-loader": "^0.13.0",
+    "webpack": "^1.12.10",
+    "webpack-dev-middleware": "^1.4.0",
+    "webpack-hot-middleware": "^2.6.0"
+  }
+}
