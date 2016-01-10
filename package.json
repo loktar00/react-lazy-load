@@ -25,8 +25,7 @@
 
   "files": [
     "dist",
-    "lib",
-    "src"
+    "lib"
   ],
 
   "keywords": [
@@ -56,14 +55,14 @@
     "eslint": "^1.8.0",
     "eslint-config-airbnb": "^0.1.0",
     "eslint-plugin-react": "^3.7.1",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
     "rimraf": "^2.4.4",
     "webpack": "^1.12.2"
   },
 
   "dependencies": {
-    "classnames": "^2.2.0",
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "classnames": "^2.2.0"
   },
 
   "peerDependencies": {
