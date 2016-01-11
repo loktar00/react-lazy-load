@@ -11,8 +11,9 @@ export default class LazyLoad extends Component {
     visible: false,
   };
   componentDidMount() {
-    window.addEventListener('scroll', this.onWindowScroll);
-    window.addEventListener('resize', this.onWindowScroll);
+    const eventNode = this.getEventNode();
+    eventNode.addEventListener('scroll', this.onWindowScroll);
+    eventNode.addEventListener('resize', this.onWindowScroll);
     this.onWindowScroll();
   }
   componentDidUpdate() {
@@ -30,22 +31,41 @@ export default class LazyLoad extends Component {
     this.onVisible();
   }
   onVisible() {
-    window.removeEventListener('scroll', this.onWindowScroll);
-    window.removeEventListener('resize', this.onWindowScroll);
+    const eventNode = this.getEventNode();
+    eventNode.removeEventListener('scroll', this.onWindowScroll);
+    eventNode.removeEventListener('resize', this.onWindowScroll);
   }
   onWindowScroll() {
     const { threshold } = this.props;
+    const eventNode = this.getEventNode();
+
+    let scrollTop = 0;
+    let innerHeight = 0;
+
+    if (eventNode === window) {
+      scrollTop = window.pageYOffset;
+      innerHeight = window.innerHeight;
+    } else {
+      scrollTop = eventNode.scrollTop;
+      innerHeight = eventNode.clientHeight;
+    }
 
     const bounds = findDOMNode(this).getBoundingClientRect();
-    const scrollTop = window.pageYOffset;
     const top = bounds.top + scrollTop;
     const height = bounds.bottom - bounds.top;
 
-    if (top === 0 || (top <= (scrollTop + window.innerHeight + threshold)
+    if (top === 0 || (top <= (scrollTop + innerHeight + threshold)
                       && (top + height) > (scrollTop - threshold))) {
       this.setState({ visible: true });
       this.onVisible();
     }
+  }
+  getEventNode() {
+    if (this.props.eventNode) {
+      return this.props.eventNode;
+    }
+
+    return window;
   }
   render() {
     const elStyles = {
@@ -66,6 +86,7 @@ export default class LazyLoad extends Component {
 
 LazyLoad.propTypes = {
   children: PropTypes.node.isRequired,
+  eventNode: PropTypes.node,
   height: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
