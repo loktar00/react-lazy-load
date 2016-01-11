@@ -86,7 +86,7 @@ export default class LazyLoad extends Component {
 
 LazyLoad.propTypes = {
   children: PropTypes.node.isRequired,
-  eventNode: PropTypes.node,
+  eventNode: PropTypes.any,
   height: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
