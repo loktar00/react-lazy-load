@@ -1,10 +1,11 @@
-import React, { Children, Component, PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
+const React = require('react');
+const { Children, Component, PropTypes } = React;
+const { findDOMNode } = require('react-dom');
 
-import { add, remove } from 'eventlistener';
-import debounce from 'lodash.debounce';
+const { add, remove } = require('eventlistener');
+const debounce = require('lodash.debounce');
 
-import inView from './utils/inView';
+const inView = require('./utils/inView');
 
 class LazyLoad extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class LazyLoad extends Component {
   shouldComponentUpdate(_nextProps, nextState) {
     return nextState.visible;
   }
-  componentDidMount() {    
+  componentDidMount() {
     const eventNode = this.getEventNode();
 
     add(window, 'resize', this.lazyLoadHandler);
@@ -133,4 +134,4 @@ LazyLoad.defaultProps = {
   throttle: 250,
 };
 
-export default LazyLoad;
+module.exports = LazyLoad;

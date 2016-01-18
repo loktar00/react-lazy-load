@@ -1,4 +1,1 @@
-const isHidden = (element) =>
-  element.offsetParent === null;
-
-export default isHidden;
+module.exports = (element) => element.offsetParent === null;

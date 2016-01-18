@@ -1,12 +1,11 @@
-import isHidden from './isHidden';
+const isHidden = require('./isHidden');
 
-const inView = (element, view) => {
+module.exports = (element, view) => {
   if (isHidden(element)) {
     return false;
   }
 
   const box = element.getBoundingClientRect();
-  console.log(box, view);
   return (
     box.right >= view.left &&
     box.bottom >= view.top &&
@@ -14,5 +13,3 @@ const inView = (element, view) => {
     box.top <= view.bottom
   );
 };
-
-export default inView;
