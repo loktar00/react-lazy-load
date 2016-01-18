@@ -1,12 +1,13 @@
-.filler {
-  height: 300px;
-}
-
-.lazy-load {
+.LazyLoad {
   opacity: 0;
   transition: all 2s ease-in-out;
+  background-color: red;
+
+  &.is-visible {
+    opacity: 1;
+  }
 }
 
-.lazy-load-visible {
-  opacity: 1;
+.filler {
+  height: 50px;
 }
