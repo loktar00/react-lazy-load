@@ -21,14 +21,14 @@ class LazyLoad extends Component {
       visible: false,
     };
   }
-  shouldComponentUpdate(_nextProps, nextState) {
-    return nextState.visible;
-  }
   componentDidMount() {
     const eventNode = this.getEventNode();
 
     add(window, 'resize', this.lazyLoadHandler);
     add(eventNode, 'scroll', this.lazyLoadHandler);
+  }
+  shouldComponentUpdate(_nextProps, nextState) {
+    return nextState.visible;
   }
   componentWillUnmount() {
     this.detachListeners();
@@ -114,12 +114,12 @@ LazyLoad.propTypes = {
   offsetRight: PropTypes.number,
   offsetTop: PropTypes.number,
   offsetVertical: PropTypes.number,
-  onContentVisible: PropTypes.func,
   throttle: PropTypes.number,
   width: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
   ]),
+  onContentVisible: PropTypes.func,
 };
 
 LazyLoad.defaultProps = {
