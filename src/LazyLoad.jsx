@@ -118,6 +118,7 @@ LazyLoad.propTypes = {
 
 LazyLoad.defaultProps = {
   debounce: true,
+  height: 100,
   offset: 0,
   offsetBottom: 0,
   offsetHorizontal: 0,
