@@ -1,12 +1,8 @@
 {
   "name": "react-lazy-load",
-
-  "version": "2.0.2",
-
+  "version": "3.0.0",
   "description": "Simple lazy loading component built with react",
-
   "main": "./lib/LazyLoad.js",
-
   "scripts": {
     "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
     "build:lib": "babel src --out-dir lib",
@@ -17,17 +13,14 @@
     "prepublish": "npm run clean && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-
   "repository": {
     "type": "git",
     "url": "https://github.com/loktar00/react-lazy-load.git"
   },
-
   "files": [
     "dist",
     "lib"
   ],
-
   "keywords": [
     "react",
     "reactjs",
@@ -35,15 +28,11 @@
     "load",
     "lazy"
   ],
-
   "author": "Jason Brown <loktar00@gmail.com> (https://twitter.com/loktar00)",
-
   "contributors": [
     "Sergey Laptev <iamsergeylaptev@gmail.com> (https://twitter.com/iamsergeylaptev)"
   ],
-
   "license": "MIT",
-
   "devDependencies": {
     "babel-cli": "^6.3.17",
     "babel-core": "^6.2.1",
@@ -60,11 +49,10 @@
     "rimraf": "^2.4.4",
     "webpack": "^1.12.2"
   },
-
   "dependencies": {
-    "classnames": "^2.2.0"
+    "eventlistener": "0.0.1",
+    "lodash.debounce": "^4.0.0"
   },
-
   "peerDependencies": {
     "react": "^0.14.0",
     "react-dom": "^0.14.0"

@@ -1,64 +1,93 @@
-import React, { Component, PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
-import classNames from 'classnames';
+const React = require('react');
+const { findDOMNode } = require('react-dom');
+const { Children, Component, PropTypes } = React;
 
-export default class LazyLoad extends Component {
+const { add, remove } = require('eventlistener');
+const debounce = require('lodash.debounce');
+
+const parentScroll = require('./utils/parentScroll');
+const inViewport = require('./utils/inViewport');
+
+class LazyLoad extends Component {
   constructor(props) {
     super(props);
-    this.onWindowScroll = this.onWindowScroll.bind(this);
-  }
-  state = {
-    visible: false,
-  };
-  componentDidMount() {
-    window.addEventListener('scroll', this.onWindowScroll);
-    window.addEventListener('resize', this.onWindowScroll);
-    this.onWindowScroll();
-  }
-  componentDidUpdate() {
-    if (!this.state.visible) {
-      this.onWindowScroll();
+
+    if (props.debounce) {
+      this.lazyLoadHandler = debounce(this.lazyLoadHandler, props.throttle).bind(this);
     } else {
+      this.lazyLoadHandler = this.lazyLoadHandler.bind(this);
+    }
+
+    this.state = {
+      visible: false,
+    };
+  }
+  componentDidMount() {
+    const eventNode = this.getEventNode();
+
+    this.lazyLoadHandler();
+
+    add(window, 'resize', this.lazyLoadHandler);
+    add(eventNode, 'scroll', this.lazyLoadHandler);
+  }
+  shouldComponentUpdate(_nextProps, nextState) {
+    return nextState.visible;
+  }
+  componentWillUnmount() {
+    this.detachListeners();
+  }
+  getEventNode() {
+    return parentScroll(findDOMNode(this));
+  }
+  getOffset() {
+    const {
+      offset, offsetVertical, offsetHorizontal,
+      offsetTop, offsetBottom, offsetLeft, offsetRight, threshold,
+    } = this.props;
+
+    const _offsetAll = threshold || offset;
+    const _offsetVertical = offsetVertical || _offsetAll;
+    const _offsetHorizontal = offsetHorizontal || _offsetAll;
+
+    return {
+      top: offsetTop || _offsetVertical,
+      bottom: offsetBottom || _offsetVertical,
+      left: offsetLeft || _offsetHorizontal,
+      right: offsetRight || _offsetHorizontal,
+    };
+  }
+  lazyLoadHandler() {
+    const offset = this.getOffset();
+    const node = findDOMNode(this);
+    const eventNode = this.getEventNode();
+
+    if (inViewport(node, eventNode, offset)) {
       const { onContentVisible } = this.props;
+
+      this.setState({ visible: true });
+      this.detachListeners();
 
       if (onContentVisible) {
         onContentVisible();
       }
     }
   }
-  componentWillUnmount() {
-    this.onVisible();
-  }
-  onVisible() {
-    window.removeEventListener('scroll', this.onWindowScroll);
-    window.removeEventListener('resize', this.onWindowScroll);
-  }
-  onWindowScroll() {
-    const { threshold } = this.props;
+  detachListeners() {
+    const eventNode = this.getEventNode();
 
-    const bounds = findDOMNode(this).getBoundingClientRect();
-    const scrollTop = window.pageYOffset;
-    const top = bounds.top + scrollTop;
-    const height = bounds.bottom - bounds.top;
-
-    if (top === 0 || (top <= (scrollTop + window.innerHeight + threshold)
-                      && (top + height) > (scrollTop - threshold))) {
-      this.setState({ visible: true });
-      this.onVisible();
-    }
+    remove(window, 'resize', this.lazyLoadHandler);
+    remove(eventNode, 'scroll', this.lazyLoadHandler);
   }
   render() {
-    const elStyles = {
-      height: this.props.height,
-    };
-    const elClasses = classNames({
-      'lazy-load': true,
-      'lazy-load-visible': this.state.visible,
-    });
+    const { children, height, width } = this.props;
+    const { visible } = this.state;
+
+    const elStyles = { height, width };
+    const elClasses = 'LazyLoad' + (visible ? ' is-visible' : '');
 
     return (
       <div className={elClasses} style={elStyles}>
-        {this.state.visible && this.props.children}
+        {visible && Children.only(children)}
       </div>
     );
   }
@@ -66,13 +95,38 @@ export default class LazyLoad extends Component {
 
 LazyLoad.propTypes = {
   children: PropTypes.node.isRequired,
+  debounce: PropTypes.bool,
   height: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
   ]),
+  offset: PropTypes.number,
+  offsetBottom: PropTypes.number,
+  offsetHorizontal: PropTypes.number,
+  offsetLeft: PropTypes.number,
+  offsetRight: PropTypes.number,
+  offsetTop: PropTypes.number,
+  offsetVertical: PropTypes.number,
   threshold: PropTypes.number,
+  throttle: PropTypes.number,
+  width: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   onContentVisible: PropTypes.func,
 };
+
 LazyLoad.defaultProps = {
-  threshold: 0,
+  debounce: true,
+  height: 100,
+  offset: 0,
+  offsetBottom: 0,
+  offsetHorizontal: 0,
+  offsetLeft: 0,
+  offsetRight: 0,
+  offsetTop: 0,
+  offsetVertical: 0,
+  throttle: 250,
 };
+
+module.exports = LazyLoad;
