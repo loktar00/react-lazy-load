@@ -54,6 +54,7 @@ const MyComponent = () => (
 
 #### offset
 Type: `Number|String` Default: `0`
+
 Aliases: `threshold`
 
 The `offset` option allows you to specify how far below, above, to the left, and to the right of the viewport you want to _begin_ displaying your content. If you specify `0`, your content will be displayed as soon as it is visible in the viewport, if you want to load _1000px_ below or above the viewport, use `1000`.
