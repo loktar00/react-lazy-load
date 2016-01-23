@@ -41,7 +41,7 @@ const MyComponent = () => (
     <div className="filler" />
     <LazyLoad
       height={720}
-      onContentVisible={() => console.log('look ma I've been lazyloaded!')}
+      onContentVisible={() => console.log('look ma I have been lazyloaded!')}
     >
       <img src='http://apod.nasa.gov/apod/image/1502/ToadSky_Lane_1080_annotated.jpg' />
     </LazyLoad>
