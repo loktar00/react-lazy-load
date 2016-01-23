@@ -1,11 +1,12 @@
 const React = require('react');
-const { Children, Component, PropTypes } = React;
 const { findDOMNode } = require('react-dom');
+const { Children, Component, PropTypes } = React;
 
 const { add, remove } = require('eventlistener');
 const debounce = require('lodash.debounce');
 
-const inView = require('./utils/inView');
+const parentScroll = require('./utils/parentScroll');
+const inViewport = require('./utils/inViewport');
 
 class LazyLoad extends Component {
   constructor(props) {
@@ -24,6 +25,8 @@ class LazyLoad extends Component {
   componentDidMount() {
     const eventNode = this.getEventNode();
 
+    this.lazyLoadHandler();
+
     add(window, 'resize', this.lazyLoadHandler);
     add(eventNode, 'scroll', this.lazyLoadHandler);
   }
@@ -34,15 +37,15 @@ class LazyLoad extends Component {
     this.detachListeners();
   }
   getEventNode() {
-    return this.props.eventNode || window;
+    return parentScroll(findDOMNode(this));
   }
   getOffset() {
     const {
       offset, offsetVertical, offsetHorizontal,
-      offsetTop, offsetBottom, offsetLeft, offsetRight,
+      offsetTop, offsetBottom, offsetLeft, offsetRight, threshold,
     } = this.props;
 
-    const _offsetAll = offset;
+    const _offsetAll = threshold || offset;
     const _offsetVertical = offsetVertical || _offsetAll;
     const _offsetHorizontal = offsetHorizontal || _offsetAll;
 
@@ -57,17 +60,8 @@ class LazyLoad extends Component {
     const offset = this.getOffset();
     const node = findDOMNode(this);
     const eventNode = this.getEventNode();
-    const innerHeight = eventNode === window ? eventNode.innerHeight : eventNode.clientHeight;
-    const innerWidth = eventNode === window ? eventNode.innerWidth : eventNode.clientWidth;
 
-    const view = {
-      left: 0 - offset.left,
-      top: 0 - offset.top,
-      bottom: innerHeight + offset.bottom,
-      right: innerWidth + offset.right,
-    };
-
-    if (inView(node, view)) {
+    if (inViewport(node, eventNode, offset)) {
       const { onContentVisible } = this.props;
 
       this.setState({ visible: true });
@@ -102,7 +96,6 @@ class LazyLoad extends Component {
 LazyLoad.propTypes = {
   children: PropTypes.node.isRequired,
   debounce: PropTypes.bool,
-  eventNode: PropTypes.any,
   height: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -114,6 +107,7 @@ LazyLoad.propTypes = {
   offsetRight: PropTypes.number,
   offsetTop: PropTypes.number,
   offsetVertical: PropTypes.number,
+  threshold: PropTypes.number,
   throttle: PropTypes.number,
   width: PropTypes.oneOfType([
     PropTypes.string,

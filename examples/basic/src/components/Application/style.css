@@ -1,7 +1,6 @@
 .LazyLoad {
   opacity: 0;
   transition: all 2s ease-in-out;
-  background-color: red;
 
   &.is-visible {
     opacity: 1;
@@ -9,5 +8,11 @@
 }
 
 .filler {
-  height: 50px;
+  height: 150px;
+}
+
+.ScrollableContainer {
+  height: 200px;
+  overflow: scroll;
+  background-color: grey;
 }

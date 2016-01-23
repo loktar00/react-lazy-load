@@ -1,1 +1,0 @@
-module.exports = (element) => element.offsetParent === null;
