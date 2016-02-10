@@ -18,7 +18,7 @@ const scrollParent = (element) => {
       return window;
     }
 
-    if (/(scroll|auto)/.test(overflow(parent))) {
+    if (parent !== document.body && /(scroll|auto)/.test(overflow(parent))) {
       return parent;
     }
 
