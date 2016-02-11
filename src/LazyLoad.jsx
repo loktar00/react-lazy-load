@@ -12,17 +12,16 @@ class LazyLoad extends Component {
   constructor(props) {
     super(props);
 
+    this.lazyLoadHandler = this.lazyLoadHandler.bind(this);
+
     if (props.debounce) {
-      this.lazyLoadHandler = debounce(this.lazyLoadHandler, props.throttle).bind(this);
-    } else {
-      this.lazyLoadHandler = this.lazyLoadHandler.bind(this);
+      this.lazyLoadHandler = debounce(this.lazyLoadHandler, props.throttle);
     }
 
     this.state = { visible: false };
   }
   componentDidMount() {
     const eventNode = this.getEventNode();
-    this.mounted = true;
 
     this.lazyLoadHandler();
 
@@ -33,7 +32,10 @@ class LazyLoad extends Component {
     return nextState.visible;
   }
   componentWillUnmount() {
-    this.mounted = false;
+    if (this.lazyLoadHandler.cancel) {
+      this.lazyLoadHandler.cancel();
+    }
+
     this.detachListeners();
   }
   getEventNode() {
@@ -57,8 +59,6 @@ class LazyLoad extends Component {
     };
   }
   lazyLoadHandler() {
-    if (!this.mounted) return undefined;
-
     const offset = this.getOffset();
     const node = findDOMNode(this);
     const eventNode = this.getEventNode();
