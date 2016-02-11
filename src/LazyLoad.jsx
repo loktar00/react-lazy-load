@@ -18,12 +18,11 @@ class LazyLoad extends Component {
       this.lazyLoadHandler = this.lazyLoadHandler.bind(this);
     }
 
-    this.state = {
-      visible: false,
-    };
+    this.state = { visible: false };
   }
   componentDidMount() {
     const eventNode = this.getEventNode();
+    this.mounted = true;
 
     this.lazyLoadHandler();
 
@@ -34,6 +33,7 @@ class LazyLoad extends Component {
     return nextState.visible;
   }
   componentWillUnmount() {
+    this.mounted = false;
     this.detachListeners();
   }
   getEventNode() {
@@ -57,6 +57,8 @@ class LazyLoad extends Component {
     };
   }
   lazyLoadHandler() {
+    if (!this.mounted) return undefined;
+
     const offset = this.getOffset();
     const node = findDOMNode(this);
     const eventNode = this.getEventNode();
@@ -79,11 +81,15 @@ class LazyLoad extends Component {
     remove(eventNode, 'scroll', this.lazyLoadHandler);
   }
   render() {
-    const { children, height, width } = this.props;
+    const { children, className, height, width } = this.props;
     const { visible } = this.state;
 
     const elStyles = { height, width };
-    const elClasses = 'LazyLoad' + (visible ? ' is-visible' : '');
+    const elClasses = (
+      'LazyLoad' +
+      (visible ? ' is-visible' : '') +
+      (className ? ` ${className}` : '')
+    );
 
     return (
       <div className={elClasses} style={elStyles}>
@@ -95,6 +101,7 @@ class LazyLoad extends Component {
 
 LazyLoad.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   debounce: PropTypes.bool,
   height: PropTypes.oneOfType([
     PropTypes.string,
