@@ -14,11 +14,15 @@ const scrollParent = (element) => {
   let parent = element;
 
   while(parent) {
-    if (!parent.parentNode) {
-      return window;
+    if (parent === document.documentElement || parent !== document.body) {
+      break;
     }
 
-    if (parent !== document.body && /(scroll|auto)/.test(overflow(parent))) {
+    if (!parent.parentNode) {
+      break;
+    }
+
+    if (/(scroll|auto)/.test(overflow(parent))) {
       return parent;
     }
 
