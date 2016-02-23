@@ -14,7 +14,7 @@ const scrollParent = (element) => {
   let parent = element;
 
   while(parent) {
-    if (parent === document.documentElement || parent !== document.body) {
+    if (parent === document.body || parent === document.documentElement) {
       break;
     }
 
