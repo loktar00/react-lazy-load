@@ -25,6 +25,10 @@ class LazyLoad extends Component {
 
     this.lazyLoadHandler();
 
+    if (this.lazyLoadHandler.flush) {
+      this.lazyLoadHandler.flush();
+    }
+
     add(window, 'resize', this.lazyLoadHandler);
     add(eventNode, 'scroll', this.lazyLoadHandler);
   }
