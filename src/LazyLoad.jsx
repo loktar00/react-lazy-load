@@ -4,6 +4,7 @@ const { Children, Component, PropTypes } = React;
 
 const { add, remove } = require('eventlistener');
 const debounce = require('lodash.debounce');
+const throttle = require('lodash.throttle');
 
 const parentScroll = require('./utils/parentScroll');
 const inViewport = require('./utils/inViewport');
@@ -14,8 +15,12 @@ class LazyLoad extends Component {
 
     this.lazyLoadHandler = this.lazyLoadHandler.bind(this);
 
-    if (props.debounce) {
-      this.lazyLoadHandler = debounce(this.lazyLoadHandler, props.throttle);
+    if (props.throttle > 0) {
+      if (props.debounce) {
+        this.lazyLoadHandler = debounce(this.lazyLoadHandler, props.throttle);
+      } else {
+        this.lazyLoadHandler = throttle(this.lazyLoadHandler, props.throttle);
+      }
     }
 
     this.state = { visible: false };
