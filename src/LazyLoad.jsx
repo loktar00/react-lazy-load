@@ -25,6 +25,7 @@ class LazyLoad extends Component {
 
     this.state = { visible: false };
   }
+
   componentDidMount() {
     const eventNode = this.getEventNode();
 
@@ -37,9 +38,17 @@ class LazyLoad extends Component {
     add(window, 'resize', this.lazyLoadHandler);
     add(eventNode, 'scroll', this.lazyLoadHandler);
   }
+
+  componentWillReceiveProps() {
+    if (!this.state.visible) {
+      this.lazyLoadHandler();
+    }
+  }
+
   shouldComponentUpdate(_nextProps, nextState) {
     return nextState.visible;
   }
+
   componentWillUnmount() {
     if (this.lazyLoadHandler.cancel) {
       this.lazyLoadHandler.cancel();
@@ -47,9 +56,11 @@ class LazyLoad extends Component {
 
     this.detachListeners();
   }
+
   getEventNode() {
     return parentScroll(findDOMNode(this));
   }
+
   getOffset() {
     const {
       offset, offsetVertical, offsetHorizontal,
@@ -67,6 +78,7 @@ class LazyLoad extends Component {
       right: offsetRight || _offsetHorizontal,
     };
   }
+
   lazyLoadHandler() {
     const offset = this.getOffset();
     const node = findDOMNode(this);
@@ -83,12 +95,14 @@ class LazyLoad extends Component {
       }
     }
   }
+
   detachListeners() {
     const eventNode = this.getEventNode();
 
     remove(window, 'resize', this.lazyLoadHandler);
     remove(eventNode, 'scroll', this.lazyLoadHandler);
   }
+
   render() {
     const { children, className, height, width } = this.props;
     const { visible } = this.state;
