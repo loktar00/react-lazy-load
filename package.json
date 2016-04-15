@@ -11,7 +11,8 @@
     "clean": "rimraf lib dist",
     "lint": "eslint src/LazyLoad.jsx",
     "prepublish": "npm run clean && npm run build",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
