@@ -7,11 +7,11 @@ function inViewport() {
 
 // allows us to set visibility in mock
 inViewport.__setVisible = (newVisible) => {
-  visible = true;
-}
+  visible = newVisible;
+};
 
 inViewport.__reset = () => {
   visible = false;
-}
+};
 
 module.exports = inViewport;

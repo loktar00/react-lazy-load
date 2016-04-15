@@ -20,7 +20,7 @@ describe('LazyLoad', () => {
 
   it('doesn\'t load children if it\'s not visible', () => {
     const loader = TestUtils.renderIntoDocument(
-      <LazyLoad><div>Child</div></LazyLoad>
+      <LazyLoad><div>{'Child'}</div></LazyLoad>
     );
 
     const loaderNode = ReactDOM.findDOMNode(loader);
@@ -30,7 +30,7 @@ describe('LazyLoad', () => {
   it('loads children if it\'s visible', () => {
     __setVisible(true);
     const loader = TestUtils.renderIntoDocument(
-      <LazyLoad><div>Child</div></LazyLoad>
+      <LazyLoad><div>{'Child'}</div></LazyLoad>
     );
 
     const loaderNode = ReactDOM.findDOMNode(loader);
@@ -39,7 +39,7 @@ describe('LazyLoad', () => {
 
   it('re-evaluates on scroll', () => {
     const loader = TestUtils.renderIntoDocument(
-      <LazyLoad><div>Child</div></LazyLoad>
+      <LazyLoad><div>{'Child'}</div></LazyLoad>
     );
     const loaderNode = ReactDOM.findDOMNode(loader);
 

@@ -1,13 +1,11 @@
-const eventNode = {
-  addEventListener(eventName, scrollHandler) {
-    if (eventName === 'scroll') {
-      parentScroll.__scrollHandler = scrollHandler;
-    }
-  }
-};
-
 function parentScroll() {
-  return eventNode;
+  return {
+    addEventListener(eventName, scrollHandler) {
+      if (eventName === 'scroll') {
+        parentScroll.__scrollHandler = scrollHandler;
+      }
+    },
+  };
 }
 
 parentScroll.__scroll = () => {
