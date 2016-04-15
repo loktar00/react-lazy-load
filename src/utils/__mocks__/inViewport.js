@@ -10,4 +10,8 @@ inViewport.__setVisible = (newVisible) => {
   visible = true;
 }
 
+inViewport.__reset = () => {
+  visible = false;
+}
+
 module.exports = inViewport;
