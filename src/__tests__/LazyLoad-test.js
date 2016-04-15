@@ -46,6 +46,7 @@ describe('LazyLoad', () => {
     expect(loaderNode.textContent).toEqual('');
     __setVisible(true);
     __scroll();
+    jest.runAllTimers();
 
     expect(loaderNode.textContent).toEqual('Child');
   });
