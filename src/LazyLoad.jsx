@@ -8,12 +8,14 @@ const throttle = require('lodash.throttle');
 
 const parentScroll = require('./utils/parentScroll');
 const inViewport = require('./utils/inViewport');
+const deferAnimation = require('./utils/deferAnimation');
 
 class LazyLoad extends Component {
   constructor(props) {
     super(props);
 
-    this.lazyLoadHandler = this.lazyLoadHandler.bind(this);
+    const innerHandler = this.lazyLoadHandler.bind(this);
+    this.lazyLoadHandler = () => deferAnimation(innerHandler);
 
     if (props.throttle > 0) {
       if (props.debounce) {
