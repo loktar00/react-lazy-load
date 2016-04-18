@@ -35,6 +35,7 @@ class LazyLoad extends Component {
       this.lazyLoadHandler.flush();
     }
 
+    add(window, 'load', this.lazyLoadHandler);
     add(window, 'resize', this.lazyLoadHandler);
     add(eventNode, 'scroll', this.lazyLoadHandler);
   }
@@ -99,6 +100,7 @@ class LazyLoad extends Component {
   detachListeners() {
     const eventNode = this.getEventNode();
 
+    remove(window, 'load', this.lazyLoadHandler);
     remove(window, 'resize', this.lazyLoadHandler);
     remove(eventNode, 'scroll', this.lazyLoadHandler);
   }
