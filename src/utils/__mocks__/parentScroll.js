@@ -1,19 +1,17 @@
+const scrollHandlers = [];
+
 function parentScroll() {
   return {
     addEventListener(eventName, scrollHandler) {
       if (eventName === 'scroll') {
-        parentScroll.__scrollHandler = scrollHandler;
+        scrollHandlers.push(scrollHandler);
       }
     },
   };
 }
 
 parentScroll.__scroll = () => {
-  parentScroll.__scrollHandler();
-};
-
-parentScroll.__reset = () => {
-  parentScroll.__scrollHandler = () => {};
+  scrollHandlers.forEach(fn => fn());
 };
 
 module.exports = parentScroll;

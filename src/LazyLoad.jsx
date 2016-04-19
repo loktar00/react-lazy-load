@@ -5,6 +5,7 @@ const { Children, Component, PropTypes } = React;
 const { add, remove } = require('eventlistener');
 const debounce = require('lodash.debounce');
 const throttle = require('lodash.throttle');
+const { addScrollHandler, removeScrollHandler } = require('manage-scroll-handlers').default;
 
 const parentScroll = require('./utils/parentScroll');
 const inViewport = require('./utils/inViewport');
@@ -36,7 +37,7 @@ class LazyLoad extends Component {
     }
 
     add(window, 'resize', this.lazyLoadHandler);
-    add(eventNode, 'scroll', this.lazyLoadHandler);
+    addScrollHandler(this.lazyLoadHandler, eventNode);
   }
 
   componentWillReceiveProps() {
@@ -100,7 +101,7 @@ class LazyLoad extends Component {
     const eventNode = this.getEventNode();
 
     remove(window, 'resize', this.lazyLoadHandler);
-    remove(eventNode, 'scroll', this.lazyLoadHandler);
+    removeScrollHandler(this.lazyLoadHandler, eventNode);
   }
 
   render() {

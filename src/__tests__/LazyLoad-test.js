@@ -1,21 +1,22 @@
 jest.mock('../utils/inViewport');
 jest.mock('../utils/parentScroll');
 jest.mock('lodash.debounce');
+jest.unmock('manage-scroll-handlers');
 jest.unmock('../LazyLoad.jsx');
 jest.unmock('lodash.throttle');
-jest.unmock('eventlistener');
+
+// create a mock for requestAnimationFrame
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import LazyLoad from '../LazyLoad.jsx';
 import { __setVisible, __reset as resetVisible } from '../utils/inViewport';
-import { __scroll, __reset as resetScroll } from '../utils/parentScroll';
+import { __scroll } from '../utils/parentScroll';
 
 describe('LazyLoad', () => {
   beforeEach(() => {
     resetVisible();
-    resetScroll();
   });
 
   it('doesn\'t load children if it\'s not visible', () => {
@@ -46,6 +47,7 @@ describe('LazyLoad', () => {
     expect(loaderNode.textContent).toEqual('');
     __setVisible(true);
     __scroll();
+    jest.runAllTimers();
 
     expect(loaderNode.textContent).toEqual('Child');
   });
