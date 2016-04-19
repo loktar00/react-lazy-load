@@ -1,3 +1,5 @@
+import { addScrollHandler, removeScrollHandler } from 'manage-scroll-handlers';
+
 const React = require('react');
 const { findDOMNode } = require('react-dom');
 const { Children, Component, PropTypes } = React;
@@ -36,7 +38,7 @@ class LazyLoad extends Component {
     }
 
     add(window, 'resize', this.lazyLoadHandler);
-    add(eventNode, 'scroll', this.lazyLoadHandler);
+    addScrollHandler(this.lazyLoadHandler, eventNode);
   }
 
   componentWillReceiveProps() {
@@ -100,7 +102,7 @@ class LazyLoad extends Component {
     const eventNode = this.getEventNode();
 
     remove(window, 'resize', this.lazyLoadHandler);
-    remove(eventNode, 'scroll', this.lazyLoadHandler);
+    removeScrollHandler(this.lazyLoadHandler, eventNode);
   }
 
   render() {
