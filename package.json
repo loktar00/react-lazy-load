@@ -57,7 +57,7 @@
     "eventlistener": "0.0.1",
     "lodash.debounce": "^4.0.0",
     "lodash.throttle": "^4.0.0",
-    "manage-scroll-handlers": "^0.3.0"
+    "manage-scroll-handlers": "^0.5.0"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0-0",

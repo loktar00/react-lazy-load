@@ -1,3 +1,5 @@
+import { addScrollHandler, removeScrollHandler } from 'manage-scroll-handlers';
+
 const React = require('react');
 const { findDOMNode } = require('react-dom');
 const { Children, Component, PropTypes } = React;
@@ -5,7 +7,6 @@ const { Children, Component, PropTypes } = React;
 const { add, remove } = require('eventlistener');
 const debounce = require('lodash.debounce');
 const throttle = require('lodash.throttle');
-const { addScrollHandler, removeScrollHandler } = require('manage-scroll-handlers').default;
 
 const parentScroll = require('./utils/parentScroll');
 const inViewport = require('./utils/inViewport');
