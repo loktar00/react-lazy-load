@@ -11,7 +11,7 @@
     "clean": "rimraf lib dist",
     "lint": "eslint src/LazyLoad.jsx",
     "prepublish": "npm run clean && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -50,12 +50,22 @@
     "webpack": "^1.12.2"
   },
   "dependencies": {
+    "babel-jest": "^12.0.2",
     "eventlistener": "0.0.1",
+    "jest-cli": "^12.0.2",
     "lodash.debounce": "^4.0.0",
-    "lodash.throttle": "^4.0.0"
+    "lodash.throttle": "^4.0.0",
+    "react-addons-test-utils": "^15.0.2"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^15.0.0-0",
     "react-dom": "^0.14.0 || ^15.0.0-0"
+  },
+  "jest": {
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react/",
+      "<rootDir>/node_modules/react-dom/",
+      "<rootDir>/node_modules/react-addons-test-utils/"
+    ]
   }
 }
