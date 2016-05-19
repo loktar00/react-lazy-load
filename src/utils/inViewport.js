@@ -1,14 +1,7 @@
+import getElementPosition from './getElementPosition';
+
 const isHidden = (element) =>
   element.offsetParent === null;
-
-const offset = (element) => {
-  const rect = element.getBoundingClientRect();
-
-  return {
-    top: rect.top + window.pageYOffset,
-    left: rect.left + window.pageXOffset,
-  };
-};
 
 export default function inViewport(element, container, customOffset) {
   if (isHidden(element)) {
@@ -26,7 +19,7 @@ export default function inViewport(element, container, customOffset) {
     bottom = top + window.innerHeight;
     right = left + window.innerWidth;
   } else {
-    const containerOffset = offset(container);
+    const containerOffset = getElementPosition(container);
 
     top = containerOffset.top;
     left = containerOffset.left;
@@ -34,7 +27,7 @@ export default function inViewport(element, container, customOffset) {
     right = left + container.offsetWidth;
   }
 
-  const elementOffset = offset(element);
+  const elementOffset = getElementPosition(element);
 
   return (
     top < elementOffset.top + customOffset.bottom + element.offsetHeight &&
