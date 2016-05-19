@@ -15,7 +15,10 @@ export default function inViewport(element, container, customOffset) {
     return false;
   }
 
-  let top, left, bottom, right;
+  let top;
+  let bottom;
+  let left;
+  let right;
 
   if (typeof container === 'undefined' || container === window) {
     top = window.pageYOffset;
