@@ -10,7 +10,7 @@ const offset = (element) => {
   };
 };
 
-const inViewport = (element, container, customOffset) => {
+export default function inViewport(element, container, customOffset) {
   if (isHidden(element)) {
     return false;
   }
@@ -39,6 +39,4 @@ const inViewport = (element, container, customOffset) => {
     left < elementOffset.left + customOffset.right + element.offsetWidth &&
     right > elementOffset.left - customOffset.left
   );
-};
-
-module.exports = inViewport;
+}
