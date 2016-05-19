@@ -23,21 +23,21 @@ const inViewport = (element, container, customOffset) => {
     bottom = top + window.innerHeight;
     right = left + window.innerWidth;
   } else {
-    const containerOffset = offset(container);
+    const containerPosition = offset(container);
 
-    top = containerOffset.top;
-    left = containerOffset.left;
+    top = containerPosition.top;
+    left = containerPosition.left;
     bottom = top + container.offsetHeight;
     right = left + container.offsetWidth;
   }
 
-  const elementOffset = offset(element);
+  const elementPosition = offset(element);
 
   return (
-    top < elementOffset.top + customOffset.bottom + element.offsetHeight &&
-    bottom > elementOffset.top - customOffset.top &&
-    left < elementOffset.left + customOffset.right + element.offsetWidth &&
-    right > elementOffset.left - customOffset.left
+    top <= elementPosition.top + element.offsetHeight + customOffset.top &&
+    bottom >= elementPosition.top - customOffset.bottom &&
+    left <= elementPosition.left + element.offsetWidth + customOffset.left &&
+    right >= elementPosition.left - customOffset.right
   );
 };
 
