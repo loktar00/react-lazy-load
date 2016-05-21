@@ -1,15 +1,12 @@
-const React = require('react');
-const { findDOMNode } = require('react-dom');
-const { Children, Component, PropTypes } = React;
+import React, { Children, Component, PropTypes } from 'react';
+import { findDOMNode } from 'react-dom';
+import { add, remove } from 'eventlistener';
+import debounce from 'lodash.debounce';
+import throttle from 'lodash.throttle';
+import parentScroll from './utils/parentScroll';
+import inViewport from './utils/inViewport';
 
-const { add, remove } = require('eventlistener');
-const debounce = require('lodash.debounce');
-const throttle = require('lodash.throttle');
-
-const parentScroll = require('./utils/parentScroll');
-const inViewport = require('./utils/inViewport');
-
-class LazyLoad extends Component {
+export default class LazyLoad extends Component {
   constructor(props) {
     super(props);
 
@@ -157,5 +154,3 @@ LazyLoad.defaultProps = {
   offsetVertical: 0,
   throttle: 250,
 };
-
-module.exports = LazyLoad;

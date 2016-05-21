@@ -13,7 +13,7 @@ const scrollParent = (element) => {
 
   let parent = element;
 
-  while(parent) {
+  while (parent) {
     if (parent === document.body || parent === document.documentElement) {
       break;
     }
@@ -32,4 +32,4 @@ const scrollParent = (element) => {
   return window;
 };
 
-module.exports = scrollParent;
+export default scrollParent;
