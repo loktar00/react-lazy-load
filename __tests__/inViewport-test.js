@@ -26,7 +26,7 @@ describe('inViewport', () => {
     };
     expect(inViewport(element, container, { ...customOffset, bottom: 2 })).toEqual(false);
   });
-  it(`doesn't display image which sits right bolow container's vieport`, () => {
+  it(`doesn't display image which sits right bolow container's viewport`, () => {
     const element = {
       top: 101,
       left: 0,
@@ -41,7 +41,7 @@ describe('inViewport', () => {
     };
     expect(inViewport(element, container, { ...customOffset, top: 2 })).toEqual(false);
   });
-  it(`doesn't display image which sits immediately to the left of container's vieport`, () => {
+  it(`doesn't display image which sits immediately to the left of container's viewport`, () => {
     const element = {
       top: 0,
       left: 0,
@@ -56,7 +56,7 @@ describe('inViewport', () => {
     };
     expect(inViewport(element, container, { ...customOffset, right: 2 })).toEqual(false);
   });
-  it(`doesn't display image which sits immediately to the right of container's vieport`, () => {
+  it(`doesn't display image which sits immediately to the right of container's viewport`, () => {
     const element = {
       top: 0,
       left: 101,
