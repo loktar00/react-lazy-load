@@ -3,6 +3,7 @@ import { findDOMNode } from 'react-dom';
 import { add, remove } from 'eventlistener';
 import debounce from 'lodash.debounce';
 import throttle from 'lodash.throttle';
+import shallowEqual from 'fbjs/lib/shallowEqual';
 import parentScroll from './utils/parentScroll';
 import inViewport from './utils/inViewport';
 
@@ -43,7 +44,7 @@ export default class LazyLoad extends Component {
   }
 
   shouldComponentUpdate(_nextProps, nextState) {
-    return nextState.visible;
+    return !shallowEqual(this.props, _nextProps) || !shallowEqual(this.state, nextState);
   }
 
   componentWillUnmount() {
