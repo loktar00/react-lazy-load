@@ -84,12 +84,12 @@ export default class LazyLoad extends Component {
     if (inViewport(node, eventNode, offset)) {
       const { onContentVisible } = this.props;
 
-      this.setState({ visible: true });
+      this.setState({ visible: true }, () => {
+        if (onContentVisible) {
+          onContentVisible();
+        }
+      });
       this.detachListeners();
-
-      if (onContentVisible) {
-        onContentVisible();
-      }
     }
   }
 
