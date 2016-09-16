@@ -122,7 +122,7 @@ LazyLoad.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   debounce: PropTypes.bool,
-  elementType: 'div',
+  elementType: PropTypes.string,
   height: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
