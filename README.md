@@ -1,7 +1,7 @@
 React Lazy Load Component x
 =========================
 
-React Lazy Load is easy to use React component which helps you defer loading content in predictable way. Now with extended functionality. A new hook was added to trigger every time the component is within the offset from the viewport as well as the option to replace the default onscroll listener.  It's fast, works in IE8+, 6KB minified and uses debounce function by default. You can also use component inside scrolling container, such as div with scrollbar. It will be found automatically. Check out an example.
+React Lazy Load X is an easy to use React component which helps you defer loading content in predictable way with extended functionality. A new hook was added to trigger every time the component is within the offset from the viewport, as well as the option to replace the default scroll listener.  It's fast, works in IE8+, 6KB minified and uses debounce function by default. You can also use component inside scrolling container, such as div with scrollbar. It will be found automatically. Check out an example.
 
 ## Installation
 React Lazy Load X requires  **React 0.14 or later.**
