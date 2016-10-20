@@ -36,8 +36,7 @@ export default class LazyLoad extends Component {
     }
 
     add(window, 'resize', this.lazyLoadHandler);
-
-    if (this.props.defaultScrollEvent) {
+    if (!this.props.setScroll) {
       add(eventNode, 'scroll', this.lazyLoadHandler);
     } else {
       this.props.setScroll(this.lazyLoadHandler);
@@ -165,6 +164,7 @@ LazyLoad.propTypes = {
   offsetRight: PropTypes.number,
   offsetTop: PropTypes.number,
   offsetVertical: PropTypes.number,
+  setScroll: PropTypes.func,
   threshold: PropTypes.number,
   throttle: PropTypes.number,
   width: PropTypes.oneOfType([
@@ -173,7 +173,6 @@ LazyLoad.propTypes = {
   ]),
   onContentVisible: PropTypes.func,
   onLoad: PropTypes.func,
-  setScroll: PropTypes.func,
 };
 
 LazyLoad.defaultProps = {
@@ -186,5 +185,4 @@ LazyLoad.defaultProps = {
   offsetTop: 0,
   offsetVertical: 0,
   throttle: 250,
-  defaultScrollEvent: true,
 };
