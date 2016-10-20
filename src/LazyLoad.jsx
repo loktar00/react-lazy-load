@@ -20,7 +20,10 @@ export default class LazyLoad extends Component {
       }
     }
 
-    this.state = { visible: false };
+    this.state = {
+      visible: false,
+      readyTrigger: true,
+    };
   }
 
   componentDidMount() {
@@ -33,7 +36,11 @@ export default class LazyLoad extends Component {
     }
 
     add(window, 'resize', this.lazyLoadHandler);
-    add(eventNode, 'scroll', this.lazyLoadHandler);
+    if (!this.props.setScroll) {
+      add(eventNode, 'scroll', this.lazyLoadHandler);
+    } else {
+      this.props.setScroll(this.lazyLoadHandler);
+    }
   }
 
   componentWillReceiveProps() {
@@ -80,17 +87,39 @@ export default class LazyLoad extends Component {
     const offset = this.getOffset();
     const node = findDOMNode(this);
     const eventNode = this.getEventNode();
+    const inView = inViewport(node, eventNode, offset);
 
-    if (inViewport(node, eventNode, offset)) {
-      const { onContentVisible } = this.props;
-
-      this.setState({ visible: true }, () => {
-        if (onContentVisible) {
-          onContentVisible();
+    if (this.state.readyTrigger) {
+      if (inView) {
+        this.triggerOnContentVisible(false);
+        if (!this.state.visible) {
+          this.triggerOnLoad();
         }
-      });
-      this.detachListeners();
+      }
+    } else {
+      if (!inView) {
+        this.triggerOnContentVisible(true);
+      }
     }
+  }
+
+  triggerOnLoad() {
+    const { onLoad } = this.props;
+    this.setState({ 'visible': true }, () => {
+      if (onLoad) {
+        onLoad();
+      }
+    });
+  }
+
+  // currently fires event on enter viewport, remove if for both or create new if to find only exit
+  triggerOnContentVisible(bool) {
+    const { onContentVisible } = this.props;
+    this.setState({ 'readyTrigger': bool }, () => {
+      if (onContentVisible && !bool) {
+        onContentVisible();
+      }
+    });
   }
 
   detachListeners() {
@@ -123,6 +152,7 @@ LazyLoad.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   debounce: PropTypes.bool,
+  defaultScrollEvent: PropTypes.bool,
   height: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -134,6 +164,7 @@ LazyLoad.propTypes = {
   offsetRight: PropTypes.number,
   offsetTop: PropTypes.number,
   offsetVertical: PropTypes.number,
+  setScroll: PropTypes.func,
   threshold: PropTypes.number,
   throttle: PropTypes.number,
   width: PropTypes.oneOfType([
@@ -141,6 +172,7 @@ LazyLoad.propTypes = {
     PropTypes.number,
   ]),
   onContentVisible: PropTypes.func,
+  onLoad: PropTypes.func,
 };
 
 LazyLoad.defaultProps = {

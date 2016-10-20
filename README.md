@@ -1,21 +1,17 @@
-React Lazy Load Component
+React Lazy Load Component x
 =========================
 
-React Lazy Load is easy to use React component which helps you defer loading content in predictable way. It's fast, works in IE8+, 6KB minified and uses debounce function by default. You can also use component inside scrolling container, such as div with scrollbar. It will be found automatically. Check out an example.
-
-[![build status](https://img.shields.io/travis/loktar00/react-lazy-load.svg?style=flat-square)](https://travis-ci.org/loktar00/react-lazy-load)
-[![dependency status](https://david-dm.org/loktar00/react-lazy-load.svg?style=flat-square)](https://david-dm.org/loktar00/react-lazy-load)
-[![npm downloads](https://img.shields.io/npm/dm/react-lazy-load.svg?style=flat-square)](https://www.npmjs.com/package/react-lazy-load)
+React Lazy Load X is an easy to use React component which helps you defer loading content in predictable way with extended functionality. A new hook was added to trigger every time the component is within the offset from the viewport, as well as the option to replace the default scroll listener.  It's fast, works in IE8+, 6KB minified and uses debounce function by default. You can also use component inside scrolling container, such as div with scrollbar. It will be found automatically. Check out an example.
 
 ## Installation
-React Lazy Load requires **React 0.14 or later.**
+React Lazy Load X requires  **React 0.14 or later.**
 
 ```
-npm install --save react-lazy-load
+npm install --save react-lazy-load-x
 ```
 
 ## Examples
-* [Basic](https://github.com/loktar00/react-lazy-load/tree/master/examples/basic)
+* [Basic](https://github.com/markology/react-lazy-load-x/tree/master/examples/basic)
 
 ## Usage
 
@@ -41,7 +37,10 @@ const MyComponent = () => (
     <div className="filler" />
     <LazyLoad
       height={720}
-      onContentVisible={() => console.log('look ma I have been lazyloaded!')}
+      onLoad={() => console.log('look ma I have been lazyloaded!')}
+      onContentVisible={() => console.log('look pa I am in the viewport!')}
+      defaultScrollEvent={false} // false if overriding default scroll
+      setScroll={callbackFn} // overrides default scroll implementation
     >
       <img src='http://apod.nasa.gov/apod/image/1502/ToadSky_Lane_1080_annotated.jpg' />
     </LazyLoad>
@@ -99,12 +98,27 @@ Type: `Boolean` Default: `true`
 
 By default the throttling function is actually a [debounce](https://lodash.com/docs#debounce) function so that the checking function is only triggered after a user stops scrolling. To use traditional throttling where it will only check the loadable content every `throttle` milliseconds, set `debounce` to `false`.
 
-### height
+#### height
 Type: `String|Number` Default: `100`
 
 This is used to set the elements height even when it has no content.
 
-### onContentVisible
+#### defaultScrollEvent
+Type: `Boolean` Default: `true`
+
+This is used to set the elements height even when it has no content.
+
+#### setScroll
 Type `Function`
 
-A callback function to execute when the content appears on the screen.
+Scroll function to replace the default javascript scroll function. ex: requestAnimationFrame
+
+#### onLoad
+Type `Function`
+
+A callback function to execute when the content loads for the first time.
+
+#### onContentVisible
+Type `Function`
+
+A callback function to execute every time the content enters the screen.
