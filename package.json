@@ -1,6 +1,6 @@
 {
   "name": "react-lazy-load-x",
-  "version": "3.0.11",
+  "version": "3.0.12",
   "description": "Simple lazy loading component built with react /w extended functionality",
   "main": "./lib/LazyLoad.js",
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/markology/react-lazy-load.git"
+    "url": "https://github.com/markology/react-lazy-load-x.git"
   },
   "files": [
     "dist",
