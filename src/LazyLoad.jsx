@@ -5,11 +5,12 @@ import debounce from 'lodash.debounce';
 import throttle from 'lodash.throttle';
 import parentScroll from './utils/parentScroll';
 import inViewport from './utils/inViewport';
+import onScrollRAF from './utils/RAF.js';
 
 export default class LazyLoad extends Component {
+
   constructor(props) {
     super(props);
-
     this.lazyLoadHandler = this.lazyLoadHandler.bind(this);
 
     if (props.throttle > 0) {
@@ -23,7 +24,12 @@ export default class LazyLoad extends Component {
     this.state = {
       visible: false,
       readyTrigger: true,
+      raf: null,
     };
+  }
+
+  componentWillMount() {
+    this.setState({raf: onScrollRAF.instance()});
   }
 
   componentDidMount() {
@@ -34,12 +40,14 @@ export default class LazyLoad extends Component {
     if (this.lazyLoadHandler.flush) {
       this.lazyLoadHandler.flush();
     }
-
     add(window, 'resize', this.lazyLoadHandler);
-    if (!this.props.setScroll) {
+
+    if (!this.props.setScroll && this.props.setScroll !== undefined) {
       add(eventNode, 'scroll', this.lazyLoadHandler);
-    } else {
+    } else if (!this.props.useRAF) {
       this.props.setScroll(this.lazyLoadHandler);
+    } else {
+      this.state.raf.scroll(this.lazyLoadHandler);
     }
   }
 
@@ -57,9 +65,10 @@ export default class LazyLoad extends Component {
     if (this.lazyLoadHandler.cancel) {
       this.lazyLoadHandler.cancel();
     }
-
+    this.state.raf.cancel();
     this.detachListeners();
   }
+
 
   getEventNode() {
     return parentScroll(findDOMNode(this));
@@ -152,7 +161,6 @@ LazyLoad.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   debounce: PropTypes.bool,
-  defaultScrollEvent: PropTypes.bool,
   height: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -167,6 +175,7 @@ LazyLoad.propTypes = {
   setScroll: PropTypes.func,
   threshold: PropTypes.number,
   throttle: PropTypes.number,
+  useRAF: PropTypes.bool,
   width: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -185,4 +194,5 @@ LazyLoad.defaultProps = {
   offsetTop: 0,
   offsetVertical: 0,
   throttle: 250,
+  useRAF: false,
 };
