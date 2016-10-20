@@ -65,34 +65,36 @@ const onScrollRAF = {
   },
 };
 
-function test(lazyLoadHandler) {
-  const raf = onScrollRAF.instance();
-  raf.scroll(lazyLoadHandler);
-}
-
 class Application extends Component {
   constructor(props) {
     super(props);
-    this.raf = this.raf.bind(this);
+    this.state = {
+      raf: null,
+    };
   }
-  componentDidMount() {
-    this.raf = onScrollRAF.instance();
+
+  componentWillMount() {
+    this.setState({raf: onScrollRAF.instance()});
   }
 
   componentWillUnmount() {
-    this.raf.cancel();
+    this.state.raf.cancel();
   }
   render() {
     return (
       <div>
         Scroll to load images.
         <div className="filler" />
-        <LazyLoad height={362} offsetVertical={300}
-          onLoad={() => console.warn('look ma I have been lazyloaded!')}
-          onContentVisible={() => console.warn('look maim asdasdasudasd!')}
-          defaultScrollEvent={false}
-          setScroll={test}
-        >
+          <LazyLoad
+            height={362}
+            offsetVertical={300}
+            setScroll={
+              lazyLoadHandler => {
+                this.state.raf.scroll(lazyLoadHandler);
+              }}
+            onContentVisible={() => console.log('I am within the offset from the viewport!')}
+            onLoad={() => console.log('I have been lazyloaded!')}
+          >
 
           <img src='http://apod.nasa.gov/apod/image/1502/HDR_MVMQ20Feb2015ouellet1024.jpg' />
         </LazyLoad>
