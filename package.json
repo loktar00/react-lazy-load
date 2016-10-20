@@ -1,7 +1,7 @@
 {
   "name": "react-lazy-load-x",
-  "version": "3.0.10",
-  "description": "Simple lazy loading component built with react",
+  "version": "1.0",
+  "description": "Simple lazy loading component built with react /w extended functionality",
   "main": "./lib/LazyLoad.js",
   "scripts": {
     "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
@@ -28,10 +28,7 @@
     "load",
     "lazy"
   ],
-  "author": "Jason Brown <loktar00@gmail.com> (https://twitter.com/loktar00)",
-  "contributors": [
-    "Sergey Laptev <iamsergeylaptev@gmail.com> (https://twitter.com/iamsergeylaptev)"
-  ],
+  "author": "Mark Acosta <mark.acosta@complex.com>",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.3.17",
