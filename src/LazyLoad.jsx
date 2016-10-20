@@ -24,12 +24,7 @@ export default class LazyLoad extends Component {
     this.state = {
       visible: false,
       readyTrigger: true,
-      raf: null,
     };
-  }
-
-  componentWillMount() {
-    this.setState({raf: onScrollRAF.instance()});
   }
 
   componentDidMount() {
@@ -47,7 +42,7 @@ export default class LazyLoad extends Component {
     } else if (!this.props.useRAF) {
       this.props.setScroll(this.lazyLoadHandler);
     } else {
-      this.state.raf.scroll(this.lazyLoadHandler);
+      this.raf = onScrollRAF.instance().scroll(this.lazyLoadHandler);
     }
   }
 
@@ -65,7 +60,7 @@ export default class LazyLoad extends Component {
     if (this.lazyLoadHandler.cancel) {
       this.lazyLoadHandler.cancel();
     }
-    this.state.raf.cancel();
+    this.raf.cancel();
     this.detachListeners();
   }
 
