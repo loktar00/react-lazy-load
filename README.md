@@ -17,7 +17,7 @@ npm install --save react-lazy-load-x
 
 ```jsx
 import React from 'react';
-import LazyLoad from 'react-lazy-load';
+import LazyLoad from 'react-lazy-load-x';
 
 const MyComponent = () => (
   <div>
@@ -37,13 +37,17 @@ const MyComponent = () => (
     <div className="filler" />
     <LazyLoad
       height={720}
-      onLoad={() => console.log('look ma I have been lazyloaded!')}
-      onContentVisible={() => console.log('look pa I am in the viewport!')}
-      defaultScrollEvent={false} // false if overriding default scroll
-      setScroll={callbackFn} // overrides default scroll implementation
+      offsetVertical={300}
+      setScroll={
+        lazyLoadHandler => { //lazyLoadHandler is passed to scroll event and is called every event trigger
+          scrollEventTriggerFunction(lazyLoadHandler);
+        }}
+      onContentVisible={() => console.log('I am within the offset from the viewport!')}
+      onLoad={() => console.log('I have been lazyloaded!')}
     >
-      <img src='http://apod.nasa.gov/apod/image/1502/ToadSky_Lane_1080_annotated.jpg' />
+    <img src='http://apod.nasa.gov/apod/image/1502/HDR_MVMQ20Feb2015ouellet1024.jpg' />
     </LazyLoad>
+
     <div className="filler" />
   </div>
 );
