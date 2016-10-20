@@ -28,7 +28,7 @@
     "load",
     "lazy"
   ],
-  "author": "Mark Acosta <mark.acosta@complex.com>",
+  "author": "Mark J Acosta <mark.acosta@complex.com>",
   "devDependencies": {
     "babel-cli": "^6.3.17",
     "babel-core": "^6.2.1",
