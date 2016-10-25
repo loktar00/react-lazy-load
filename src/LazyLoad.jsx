@@ -12,7 +12,7 @@ export default class LazyLoad extends Component {
   constructor(props) {
     super(props);
     this.lazyLoadHandler = this.lazyLoadHandler.bind(this);
-
+    this.raf = null;
     if (props.throttle > 0) {
       if (props.debounce) {
         this.lazyLoadHandler = debounce(this.lazyLoadHandler, props.throttle);
@@ -60,7 +60,9 @@ export default class LazyLoad extends Component {
     if (this.lazyLoadHandler.cancel) {
       this.lazyLoadHandler.cancel();
     }
-    this.raf.cancel();
+    if(typeof this.raf !== 'undefined'){
+      this.raf.cancel();
+    }
     this.detachListeners();
   }
 
