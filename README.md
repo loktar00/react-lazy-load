@@ -41,7 +41,8 @@ const MyComponent = () => (
       setScroll={
         lazyLoadHandler => { //lazyLoadHandler is passed to scroll event and is called every event trigger
           scrollEventTriggerFunction(lazyLoadHandler);
-        }}
+        }} 
+        //or useRAF={true} to use Request Animation Frames 
       onContentVisible={() => console.log('I am within the offset from the viewport!')}
       onLoad={() => console.log('I have been lazyloaded!')}
     >
