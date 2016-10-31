@@ -107,10 +107,10 @@ Type: `String|Number` Default: `100`
 
 This is used to set the elements height even when it has no content.
 
-#### defaultScrollEvent
-Type: `Boolean` Default: `true`
+#### useRAF
+Type: `Boolean` Default: `false`
 
-This is used to set the elements height even when it has no content.
+Use Request Animation Frames instead of the default JS scroll functionality. (May improve performance)
 
 #### setScroll
 Type `Function`
