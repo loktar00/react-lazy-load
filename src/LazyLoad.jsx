@@ -5,14 +5,14 @@ import debounce from 'lodash.debounce';
 import throttle from 'lodash.throttle';
 import parentScroll from './utils/parentScroll';
 import inViewport from './utils/inViewport';
-import onScrollRAF from './utils/RAF.js';
+//import onScrollRAF from './utils/RAF.js';
 
 export default class LazyLoad extends Component {
 
   constructor(props) {
     super(props);
     this.lazyLoadHandler = this.lazyLoadHandler.bind(this);
-    this.raf = null;
+    // this.raf = null;
     if (props.throttle > 0) {
       if (props.debounce) {
         this.lazyLoadHandler = debounce(this.lazyLoadHandler, props.throttle);
@@ -36,13 +36,11 @@ export default class LazyLoad extends Component {
       this.lazyLoadHandler.flush();
     }
     add(window, 'resize', this.lazyLoadHandler);
-
-    if (!this.props.setScroll && this.props.setScroll !== undefined) {
-      add(eventNode, 'scroll', this.lazyLoadHandler);
-    } else if (!this.props.useRAF) {
+    if (this.props.setScroll && this.props.setScroll !== undefined) {
       this.props.setScroll(this.lazyLoadHandler);
-    } else {
-      this.raf = onScrollRAF.instance().scroll(this.lazyLoadHandler);
+    }
+    else {
+      add(eventNode, 'scroll', this.lazyLoadHandler);
     }
   }
 
@@ -56,14 +54,12 @@ export default class LazyLoad extends Component {
     return nextState.visible;
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
+  debugger;
     if (this.lazyLoadHandler.cancel) {
       this.lazyLoadHandler.cancel();
     }
-    if(typeof this.raf !== 'undefined'){
-      this.raf.cancel();
-    }
-    this.detachListeners();
+      this.detachListeners();
   }
 
 
