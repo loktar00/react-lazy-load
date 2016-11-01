@@ -41,8 +41,7 @@ const MyComponent = () => (
       setScroll={
         lazyLoadHandler => { //lazyLoadHandler is passed to scroll event and is called every event trigger
           scrollEventTriggerFunction(lazyLoadHandler);
-        }} 
-        //or useRAF={true} to use Request Animation Frames 
+        }}
       onContentVisible={() => console.log('I am within the offset from the viewport!')}
       onLoad={() => console.log('I have been lazyloaded!')}
     >
@@ -107,11 +106,6 @@ By default the throttling function is actually a [debounce](https://lodash.com/d
 Type: `String|Number` Default: `100`
 
 This is used to set the elements height even when it has no content.
-
-#### useRAF
-Type: `Boolean` Default: `false`
-
-Use Request Animation Frames instead of the default JS scroll functionality. (May improve performance)
 
 #### setScroll
 Type `Function`
