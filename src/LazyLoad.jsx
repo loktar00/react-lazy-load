@@ -5,13 +5,14 @@ import debounce from 'lodash.debounce';
 import throttle from 'lodash.throttle';
 import parentScroll from './utils/parentScroll';
 import inViewport from './utils/inViewport';
+//import onScrollRAF from './utils/RAF.js';
 
 export default class LazyLoad extends Component {
+
   constructor(props) {
     super(props);
-
     this.lazyLoadHandler = this.lazyLoadHandler.bind(this);
-
+    // this.raf = null;
     if (props.throttle > 0) {
       if (props.debounce) {
         this.lazyLoadHandler = debounce(this.lazyLoadHandler, props.throttle);
@@ -20,7 +21,10 @@ export default class LazyLoad extends Component {
       }
     }
 
-    this.state = { visible: false };
+    this.state = {
+      visible: false,
+      readyTrigger: true,
+    };
   }
 
   componentDidMount() {
@@ -31,9 +35,13 @@ export default class LazyLoad extends Component {
     if (this.lazyLoadHandler.flush) {
       this.lazyLoadHandler.flush();
     }
-
     add(window, 'resize', this.lazyLoadHandler);
-    add(eventNode, 'scroll', this.lazyLoadHandler);
+    if (this.props.setScroll && this.props.setScroll !== undefined) {
+      this.props.setScroll(this.lazyLoadHandler);
+    }
+    else {
+      add(eventNode, 'scroll', this.lazyLoadHandler);
+    }
   }
 
   componentWillReceiveProps() {
@@ -46,13 +54,14 @@ export default class LazyLoad extends Component {
     return nextState.visible;
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
+  debugger;
     if (this.lazyLoadHandler.cancel) {
       this.lazyLoadHandler.cancel();
     }
-
-    this.detachListeners();
+      this.detachListeners();
   }
+
 
   getEventNode() {
     return parentScroll(findDOMNode(this));
@@ -80,17 +89,39 @@ export default class LazyLoad extends Component {
     const offset = this.getOffset();
     const node = findDOMNode(this);
     const eventNode = this.getEventNode();
+    const inView = inViewport(node, eventNode, offset);
 
-    if (inViewport(node, eventNode, offset)) {
-      const { onContentVisible } = this.props;
-
-      this.setState({ visible: true }, () => {
-        if (onContentVisible) {
-          onContentVisible();
+    if (this.state.readyTrigger) {
+      if (inView) {
+        this.triggerOnContentVisible(false);
+        if (!this.state.visible) {
+          this.triggerOnLoad();
         }
-      });
-      this.detachListeners();
+      }
+    } else {
+      if (!inView) {
+        this.triggerOnContentVisible(true);
+      }
     }
+  }
+
+  triggerOnLoad() {
+    const { onLoad } = this.props;
+    this.setState({ 'visible': true }, () => {
+      if (onLoad) {
+        onLoad();
+      }
+    });
+  }
+
+  // currently fires event on enter viewport, remove if for both or create new if to find only exit
+  triggerOnContentVisible(bool) {
+    const { onContentVisible } = this.props;
+    this.setState({ 'readyTrigger': bool }, () => {
+      if (onContentVisible && !bool) {
+        onContentVisible();
+      }
+    });
   }
 
   detachListeners() {
@@ -134,13 +165,16 @@ LazyLoad.propTypes = {
   offsetRight: PropTypes.number,
   offsetTop: PropTypes.number,
   offsetVertical: PropTypes.number,
+  setScroll: PropTypes.func,
   threshold: PropTypes.number,
   throttle: PropTypes.number,
+  useRAF: PropTypes.bool,
   width: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
   ]),
   onContentVisible: PropTypes.func,
+  onLoad: PropTypes.func,
 };
 
 LazyLoad.defaultProps = {
@@ -154,4 +188,5 @@ LazyLoad.defaultProps = {
   offsetTop: 0,
   offsetVertical: 0,
   throttle: 250,
+  useRAF: false,
 };

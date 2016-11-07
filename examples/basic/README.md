@@ -1,11 +1,11 @@
 ## Basic
 
-Run the [Basic](https://github.com/loktar00/react-lazy-load/tree/master/examples/basic) example:
+Run the [Basic](https://github.com/markology/react-lazy-load-x/tree/master/examples/basic) example:
 
 ```shell
-git clone https://github.com/loktar00/react-lazy-load.git
+git clone https://github.com/markology/react-lazy-load-x.git
 
-cd react-lazy-load
+cd react-lazy-load-x
 npm install
 
 cd ./examples/basic
