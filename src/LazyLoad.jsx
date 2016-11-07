@@ -111,11 +111,10 @@ export default class LazyLoad extends Component {
       (className ? ` ${className}` : '')
     );
 
-    return (
-      <div className={elClasses} style={elStyles}>
-        {visible && Children.only(children)}
-      </div>
-    );
+    return React.createElement(this.props.elementType, {
+      className: elClasses,
+      style: elStyles,
+    }, visible && Children.only(children));
   }
 }
 
@@ -123,6 +122,7 @@ LazyLoad.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   debounce: PropTypes.bool,
+  elementType: PropTypes.string,
   height: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -144,6 +144,7 @@ LazyLoad.propTypes = {
 };
 
 LazyLoad.defaultProps = {
+  elementType: 'div',
   debounce: true,
   offset: 0,
   offsetBottom: 0,
