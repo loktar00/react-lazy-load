@@ -5,8 +5,8 @@ const offset = (element) => {
   const rect = element.getBoundingClientRect();
 
   return {
-    top: rect.top + window.pageYOffset,
-    left: rect.left + window.pageXOffset,
+    top: rect.top + (window.pageYOffset || document.documentElement.scrollTop),
+    left: rect.left + (window.pageXOffset || document.documentElement.scrollLeft)
   };
 };
 
@@ -18,10 +18,10 @@ const inViewport = (element, container, customOffset) => {
   let top, left, bottom, right;
 
   if (typeof container === 'undefined' || container === window) {
-    top = window.pageYOffset;
-    left = window.pageXOffset;
-    bottom = top + window.innerHeight;
-    right = left + window.innerWidth;
+    top = window.pageYOffset || document.documentElement.scrollTop;
+    left = window.pageXOffset || document.documentElement.scrollLeft;
+    bottom = top + (window.innerHeight || document.documentElement.clientHeight);
+    right = left + (window.innerWidth || document.documentElement.clientWidth);
   } else {
     const containerOffset = offset(container);
 

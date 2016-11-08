@@ -7,7 +7,7 @@ const overflow = (element) =>
   style(element, 'overflow') + style(element, 'overflow-y') + style(element, 'overflow-x');
 
 const scrollParent = (element) => {
-  if (!(element instanceof HTMLElement)) {
+  if (!(element instanceof Element)) {
     return window;
   }
 
