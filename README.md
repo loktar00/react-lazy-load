@@ -99,12 +99,17 @@ Type: `Boolean` Default: `true`
 
 By default the throttling function is actually a [debounce](https://lodash.com/docs#debounce) function so that the checking function is only triggered after a user stops scrolling. To use traditional throttling where it will only check the loadable content every `throttle` milliseconds, set `debounce` to `false`.
 
-### height
-Type: `String|Number` Default: `100`
+#### height
+Type: `String|Number`
 
-This is used to set the elements height even when it has no content.
+The `height` option allows you to set the element's height even when it has no content.
 
-### onContentVisible
+#### width
+Type: `String|Number`
+
+The `width` option allows you to set the element's width even when it has no content.
+
+#### onContentVisible
 Type `Function`
 
 A callback function to execute when the content appears on the screen.
