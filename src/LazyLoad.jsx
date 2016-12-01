@@ -101,7 +101,7 @@ export default class LazyLoad extends Component {
   }
 
   render() {
-    const { children, className, height, width } = this.props;
+    const { children, className, height, width, placeholder } = this.props;
     const { visible } = this.state;
 
     const elStyles = { height, width };
@@ -114,7 +114,7 @@ export default class LazyLoad extends Component {
     return React.createElement(this.props.elementType, {
       className: elClasses,
       style: elStyles,
-    }, visible ? Children.only(children) : (this.props.placeholder ? this.props.placeholder : null));
+    }, visible ? Children.only(children) : placeholder);
   }
 }
 
