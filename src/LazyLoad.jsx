@@ -24,6 +24,7 @@ export default class LazyLoad extends Component {
   }
 
   componentDidMount() {
+    this._mounted = true;
     const eventNode = this.getEventNode();
 
     this.lazyLoadHandler();
@@ -47,6 +48,7 @@ export default class LazyLoad extends Component {
   }
 
   componentWillUnmount() {
+    this._mounted = false;
     if (this.lazyLoadHandler.cancel) {
       this.lazyLoadHandler.cancel();
     }
@@ -77,6 +79,9 @@ export default class LazyLoad extends Component {
   }
 
   lazyLoadHandler() {
+    if (!this._mounted) {
+      return;
+    }
     const offset = this.getOffset();
     const node = findDOMNode(this);
     const eventNode = this.getEventNode();
