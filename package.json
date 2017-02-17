@@ -1,6 +1,6 @@
 {
   "name": "react-lazy-load",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "description": "Simple lazy loading component built with react",
   "main": "./lib/LazyLoad.js",
   "scripts": {
