@@ -39,7 +39,7 @@ export default class LazyLoad extends Component {
   }
 
   componentWillReceiveProps() {
-    if (!this.state.visible) {
+    if (!this.state.visible || this.props.toggleVisibility) {
       this.lazyLoadHandler();
     }
   }
@@ -96,6 +96,10 @@ export default class LazyLoad extends Component {
         }
       });
       this.detachListeners();
+    } else if (this.props.toggleVisibility) {
+      this.setState({
+        visible: false,
+      });
     }
   }
 
@@ -142,6 +146,7 @@ LazyLoad.propTypes = {
   offsetVertical: PropTypes.number,
   threshold: PropTypes.number,
   throttle: PropTypes.number,
+  toggleVisibility: PropTypes.bool,
   width: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -160,4 +165,5 @@ LazyLoad.defaultProps = {
   offsetTop: 0,
   offsetVertical: 0,
   throttle: 250,
+  toggleVisibility: false,
 };
