@@ -6,6 +6,9 @@ import debounce from 'lodash/debounce';
 import throttle from 'lodash/throttle';
 import parentScroll from './utils/parentScroll';
 import inViewport from './utils/inViewport';
+import injectCss from './utils/injectCSS';
+
+injectCss(window);
 
 export default class LazyLoad extends Component {
   constructor(props) {
@@ -125,10 +128,22 @@ export default class LazyLoad extends Component {
       onError: () => { this.setState({ errored: true }); },
     };
 
+    let content;
+
+    if (visible) {
+      if (loaded) {
+        content = React.cloneElement(children, props);
+      } else if (errored) {
+        content = offline;
+      } else {
+        content = [spinner, React.cloneElement(children, props)];
+      }
+    }
+
     return React.createElement(this.props.elementType, {
       className: elClasses,
       style: elStyles,
-    }, visible && [spinner, offline, React.cloneElement(children, props)] );
+    }, content);
   }
 }
 
