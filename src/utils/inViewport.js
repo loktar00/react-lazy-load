@@ -19,6 +19,8 @@ export default function inViewport(element, container, customOffset) {
     bottom = top + window.innerHeight;
     right = left + window.innerWidth;
   } else {
+    if (!inViewport(container, window, customOffset)) return false;
+
     const containerPosition = getElementPosition(container);
 
     top = containerPosition.top;
