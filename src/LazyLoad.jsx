@@ -58,7 +58,9 @@ export default class LazyLoad extends Component {
   }
 
   getEventNode() {
-    return parentScroll(findDOMNode(this));
+    const {scrollElement} = this.props;
+
+    return scrollElement || parentScroll(findDOMNode(this));
   }
 
   getOffset() {
@@ -147,6 +149,7 @@ LazyLoad.propTypes = {
     PropTypes.number,
   ]),
   onContentVisible: PropTypes.func,
+  scrollElement: PropTypes.element,
 };
 
 LazyLoad.defaultProps = {
