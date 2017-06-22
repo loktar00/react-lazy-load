@@ -113,3 +113,8 @@ The `width` option allows you to set the element's width even when it has no con
 Type `Function`
 
 A callback function to execute when the content appears on the screen.
+
+#### scrollElement
+Type `Element`
+
+An Element which we used to listen scroll events on it. By default the library will try to find the closest parent element which has any overflow property (```overflow```, ```overflow-x```, ```overflow```) set to **scroll|auto**
