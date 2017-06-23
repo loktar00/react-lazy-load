@@ -6,7 +6,7 @@ const style = (element, prop) =>
 const overflow = (element) =>
   style(element, 'overflow') + style(element, 'overflow-y') + style(element, 'overflow-x');
 
-const hasClassName = (className) => (element) => element.classList.contains(className);
+const hasClassName = (element, className) => element.classList.contains(className);
 
 const hasValidOverflow = (element) => /(scroll|auto)/.test(overflow(element));
 
@@ -14,8 +14,6 @@ const scrollParent = (element, wrapperClassName) => {
   if (!(element instanceof HTMLElement)) {
     return window;
   }
-
-  const isWrapperElement = wrapperClassName ? hasClassName(wrapperClassName) : hasValidOverflow;
 
   let parent = element;
 
@@ -28,7 +26,7 @@ const scrollParent = (element, wrapperClassName) => {
       break;
     }
 
-    if (isWrapperElement(parent)) {
+    if (hasClassName(parent, wrapperClassName) || hasValidOverflow(parent)) {
       return parent;
     }
 
