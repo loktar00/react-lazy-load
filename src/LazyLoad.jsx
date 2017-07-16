@@ -26,20 +26,12 @@ export default class LazyLoad extends Component {
 
   componentDidMount() {
     this._mounted = true;
-    const eventNode = this.getEventNode();
-
-    this.lazyLoadHandler();
-
-    if (this.lazyLoadHandler.flush) {
-      this.lazyLoadHandler.flush();
-    }
-
-    add(window, 'resize', this.lazyLoadHandler);
-    add(eventNode, 'scroll', this.lazyLoadHandler);
+    this.attachListeners();
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.resetID !== this.props.resetID) {
+      this.attachListeners();
       return this.setState({ visible: false });
     }
     
@@ -101,6 +93,19 @@ export default class LazyLoad extends Component {
       });
       this.detachListeners();
     }
+  }
+  
+  attachListeners() {
+    const eventNode = this.getEventNode();
+
+    this.lazyLoadHandler();
+
+    if (this.lazyLoadHandler.flush) {
+      this.lazyLoadHandler.flush();
+    }
+
+    add(window, 'resize', this.lazyLoadHandler);
+    add(eventNode, 'scroll', this.lazyLoadHandler);
   }
 
   detachListeners() {
