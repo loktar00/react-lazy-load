@@ -33,7 +33,7 @@ export default class LazyLoad extends Component {
     if (nextProps.resetID !== this.props.resetID) {
       return this.setState({ visible: false }, () => this.attachListeners());
     }
-  
+
     if (!this.state.visible) {
       this.lazyLoadHandler();
     }
