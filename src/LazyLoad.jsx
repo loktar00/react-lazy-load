@@ -1,11 +1,14 @@
-import React, { Children, Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import { add, remove } from 'eventlistener';
-import debounce from 'lodash.debounce';
-import throttle from 'lodash.throttle';
+import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import parentScroll from './utils/parentScroll';
 import inViewport from './utils/inViewport';
+import injectCss from './utils/injectCSS';
+
+injectCss(window);
 
 export default class LazyLoad extends Component {
   constructor(props) {
@@ -107,20 +110,40 @@ export default class LazyLoad extends Component {
   }
 
   render() {
-    const { children, className, height, width } = this.props;
-    const { visible } = this.state;
+    const { children, className, height, width, spinner, offline } = this.props;
+    const { visible, loaded, errored } = this.state;
 
     const elStyles = { height, width };
-    const elClasses = (
-      'LazyLoad' +
-      (visible ? ' is-visible' : '') +
-      (className ? ` ${className}` : '')
-    );
+    const elClasses = [
+      'LazyLoad',
+      (visible ? ' is-visible' : ''),
+      (loaded ? ' is-loaded' : ''),
+      (errored ? ' is-errored' : ''),
+      (className ? ` ${className}` : ''),
+    ].join('');
+
+    const props = {
+      key: 'child',
+      onLoad: () => { this.setState({ loaded: true }); },
+      onError: () => { this.setState({ errored: true }); },
+    };
+
+    let content;
+
+    if (visible) {
+      if (loaded) {
+        content = React.cloneElement(children, props);
+      } else if (errored) {
+        content = offline;
+      } else {
+        content = [spinner, React.cloneElement(children, props)];
+      }
+    }
 
     return React.createElement(this.props.elementType, {
       className: elClasses,
       style: elStyles,
-    }, visible && Children.only(children));
+    }, content);
   }
 }
 
@@ -133,6 +156,7 @@ LazyLoad.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
+  offline: PropTypes.node,
   offset: PropTypes.number,
   offsetBottom: PropTypes.number,
   offsetHorizontal: PropTypes.number,
@@ -140,6 +164,7 @@ LazyLoad.propTypes = {
   offsetRight: PropTypes.number,
   offsetTop: PropTypes.number,
   offsetVertical: PropTypes.number,
+  spinner: PropTypes.node,
   threshold: PropTypes.number,
   throttle: PropTypes.number,
   width: PropTypes.oneOfType([
@@ -160,4 +185,6 @@ LazyLoad.defaultProps = {
   offsetTop: 0,
   offsetVertical: 0,
   throttle: 250,
+  spinner: <div className="spinner" key="spinner"></div>,
+  offline: <div className="offline" key="offline"></div>,
 };
