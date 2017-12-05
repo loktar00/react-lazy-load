@@ -26,26 +26,21 @@ export default class LazyLoad extends Component {
 
   componentDidMount() {
     this._mounted = true;
-    const eventNode = this.getEventNode();
-
-    this.lazyLoadHandler();
-
-    if (this.lazyLoadHandler.flush) {
-      this.lazyLoadHandler.flush();
-    }
-
-    add(window, 'resize', this.lazyLoadHandler);
-    add(eventNode, 'scroll', this.lazyLoadHandler);
+    this.attachListeners();
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.resetID !== this.props.resetID) {
+      return this.setState({ visible: false }, () => this.attachListeners());
+    }
+
     if (!this.state.visible) {
       this.lazyLoadHandler();
     }
   }
 
-  shouldComponentUpdate(_nextProps, nextState) {
-    return nextState.visible;
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.resetID !== this.props.resetID || nextState.visible;
   }
 
   componentWillUnmount() {
@@ -99,6 +94,19 @@ export default class LazyLoad extends Component {
     }
   }
 
+  attachListeners() {
+    const eventNode = this.getEventNode();
+
+    this.lazyLoadHandler();
+
+    if (this.lazyLoadHandler.flush) {
+      this.lazyLoadHandler.flush();
+    }
+
+    add(window, 'resize', this.lazyLoadHandler);
+    add(eventNode, 'scroll', this.lazyLoadHandler);
+  }
+
   detachListeners() {
     const eventNode = this.getEventNode();
 
@@ -140,6 +148,7 @@ LazyLoad.propTypes = {
   offsetRight: PropTypes.number,
   offsetTop: PropTypes.number,
   offsetVertical: PropTypes.number,
+  resetID: PropTypes.string,
   threshold: PropTypes.number,
   throttle: PropTypes.number,
   width: PropTypes.oneOfType([
@@ -160,4 +169,5 @@ LazyLoad.defaultProps = {
   offsetTop: 0,
   offsetVertical: 0,
   throttle: 250,
+  resetID: '',
 };
