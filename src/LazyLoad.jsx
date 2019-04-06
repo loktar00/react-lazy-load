@@ -2,10 +2,12 @@ import React, { Children, Component } from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import { add, remove } from 'eventlistener';
-import debounce from 'lodash.debounce';
-import throttle from 'lodash.throttle';
+import {debounce, throttle} from 'lodash';
+
 import parentScroll from './utils/parentScroll';
 import inViewport from './utils/inViewport';
+
+var _testId = 1;
 
 export default class LazyLoad extends Component {
   constructor(props) {
@@ -22,7 +24,10 @@ export default class LazyLoad extends Component {
     }
 
     this.state = { visible: false };
+    this.testID = ++_testId;
   }
+
+    
 
   componentDidMount() {
     this._mounted = true;
@@ -49,6 +54,9 @@ export default class LazyLoad extends Component {
   }
 
   componentWillUnmount() {
+
+    //console.debug('[lazy-load]', this.testID, 'componentWillUnmount');
+
     this._mounted = false;
     if (this.lazyLoadHandler.cancel) {
       this.lazyLoadHandler.cancel();
@@ -87,20 +95,42 @@ export default class LazyLoad extends Component {
     const node = findDOMNode(this);
     const eventNode = this.getEventNode();
 
-    if (inViewport(node, eventNode, offset)) {
-      const { onContentVisible } = this.props;
+    const { onContentVisible, unmountIfInvisible } = this.props;
+    const {visible} = this.state;
 
-      this.setState({ visible: true }, () => {
-        if (onContentVisible) {
-          onContentVisible();
+    const isInViewPort =  inViewport(node, eventNode, offset);
+
+    //console.debug('[lazy-load]', this.testID, 'isInViewPort->',isInViewPort);
+
+    if (isInViewPort) {
+    
+        if(!visible){
+            //console.debug('[lazy-load]', this.testID, 'setting Visible : true');
+            this.setState({ visible: true }, () => {
+                if (onContentVisible) {
+                    onContentVisible();
+                }
+            });
         }
-      });
-      this.detachListeners();
+        
+        if(!unmountIfInvisible)
+            this.detachListeners();
+    }else{
+        
+        if(unmountIfInvisible && visible){
+            //console.debug('[lazy-load]', this.testID, 'setting Visible : false');
+            this.setState({ visible: false });
+
+            //we need to force update cause the compononeis outside ViewPort so render won;t be called
+            this.forceUpdate();
+        }
     }
+        
   }
 
   detachListeners() {
     const eventNode = this.getEventNode();
+    //console.debug('[lazy-load]', this.testID, 'detachListeners');
 
     remove(window, 'resize', this.lazyLoadHandler);
     remove(eventNode, 'scroll', this.lazyLoadHandler);
@@ -109,6 +139,8 @@ export default class LazyLoad extends Component {
   render() {
     const { children, className, height, width } = this.props;
     const { visible } = this.state;
+
+    //console.debug('[lazy-load]', this.testID, 'Render: ', visible);
 
     const elStyles = { height, width };
     const elClasses = (
@@ -147,6 +179,7 @@ LazyLoad.propTypes = {
     PropTypes.number,
   ]),
   onContentVisible: PropTypes.func,
+  unmountIfInvisible: PropTypes.bool
 };
 
 LazyLoad.defaultProps = {
@@ -160,4 +193,5 @@ LazyLoad.defaultProps = {
   offsetTop: 0,
   offsetVertical: 0,
   throttle: 250,
+  unmountIfInvisible: false
 };
