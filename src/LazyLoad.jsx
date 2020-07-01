@@ -36,6 +36,8 @@ export default class LazyLoad extends Component {
 
     add(window, 'resize', this.lazyLoadHandler);
     add(eventNode, 'scroll', this.lazyLoadHandler);
+
+    if (eventNode !== window) add(window, 'scroll', this.lazyLoadHandler);
   }
 
   componentWillReceiveProps() {
@@ -104,6 +106,8 @@ export default class LazyLoad extends Component {
 
     remove(window, 'resize', this.lazyLoadHandler);
     remove(eventNode, 'scroll', this.lazyLoadHandler);
+
+    if (eventNode !== window) remove(window, 'scroll', this.lazyLoadHandler);
   }
 
   render() {
