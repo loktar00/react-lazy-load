@@ -40,7 +40,7 @@ export default class LazyLoad extends Component {
     if (eventNode !== window) add(window, 'scroll', this.lazyLoadHandler);
   }
 
-  componentWillReceiveProps() {
+  componentDidUpdate() {
     if (!this.state.visible) {
       this.lazyLoadHandler();
     }
