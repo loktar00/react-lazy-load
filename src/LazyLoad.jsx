@@ -2,8 +2,8 @@ import React, { Children, Component } from 'react';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import { add, remove } from 'eventlistener';
-import debounce from 'lodash.debounce';
-import throttle from 'lodash.throttle';
+import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import parentScroll from './utils/parentScroll';
 import inViewport from './utils/inViewport';
 
