@@ -1,7 +1,9 @@
-const style = (element, prop) =>
-  typeof getComputedStyle !== 'undefined'
-    ? getComputedStyle(element, null).getPropertyValue(prop)
-    : element.style[prop];
+const style = (element, prop) => {
+  const computedValue = getComputedStyle !== 'undefined' && getComputedStyle(element, null) ?
+    getComputedStyle(element, null).getPropertyValue(prop) : null;
+
+  return computedValue || element.style[prop];
+}
 
 const overflow = (element) =>
   style(element, 'overflow') + style(element, 'overflow-y') + style(element, 'overflow-x');
