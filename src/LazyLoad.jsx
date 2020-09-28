@@ -47,7 +47,7 @@ export default class LazyLoad extends Component {
   }
 
   shouldComponentUpdate(_nextProps, nextState) {
-    return nextState.visible;
+    return nextState.visible || this.props.height !== _nextProps.height;
   }
 
   componentWillUnmount() {
