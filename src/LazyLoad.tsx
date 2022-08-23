@@ -37,7 +37,7 @@ export default class LazyLoad extends Component<Props, State> {
     static defaultProps = {
         elementType: 'div',
         className: '',
-        debounce: true,
+        debounce: false,
         offset: 0,
         offsetBottom: 0,
         offsetHorizontal: 0,
