@@ -80,6 +80,24 @@ const MyComponent = () => (
 ```
 
 
+### Example controlling element transition
+
+There are two primary classes you an use to control the component `LazyLoad` and `is-visible`
+
+
+```css
+/* Example of how to fade our content in */
+
+.LazyLoad {
+  opacity: 0;
+  transition: all 1s ease-in-out;
+}
+
+.is-visible {
+  opacity: 1;
+}
+```
+
 ## Props
 
 #### offset
