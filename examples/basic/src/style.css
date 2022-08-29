@@ -1,6 +1,14 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .LazyLoad {
   opacity: 0;
-  transition: all 2s ease-in-out;
+  transition: all .5s ease-in-out;
+  margin: 0 0 300px;
 }
 
 .is-visible {
@@ -12,7 +20,18 @@
 }
 
 .scrollable-container {
-  height: 200px;
+  height: 400px;
+  width: 50vw;
   overflow: scroll;
   background-color: grey;
+}
+
+.scrollable-container .LazyLoad {
+  margin-top: 600px;
+}
+
+.horizontal-scroll {
+  display: flex;
+  justify-content: flex-end;
+  width: 300vw;
 }

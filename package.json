@@ -13,10 +13,7 @@
     }
   },
   "scripts": {
-    "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
-    "build:lib": "babel src --out-dir lib",
-    "build:umd": "webpack src/LazyLoad.jsx dist/LazyLoad.js --config webpack.config.development.js",
-    "build:umd:min": "webpack src/LazyLoad.jsx dist/LazyLoad.min.js --config webpack.config.production.js",
+    "build": "npx vite build",
     "clean": "rimraf lib dist",
     "lint": "eslint src/LazyLoad.jsx",
     "prepublish": "npm run clean && npm run build",
