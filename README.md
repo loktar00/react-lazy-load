@@ -106,3 +106,20 @@ The `width` option allows you to set the element's width even when it has no con
 Type `Function`
 
 A callback function to execute when the content appears on the screen.
+
+
+## Building LazyLoad
+
+```
+npm run build
+```
+
+## Running examples
+
+```
+cd examples/basic
+npm run dev
+```
+
+
+
