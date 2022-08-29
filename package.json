@@ -52,28 +52,18 @@
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "jest-cli": "^12.0.2",
     "react": "^18.2.0",
-    "react-addons-test-utils": "^0.14.8",
     "react-dom": "^18.2.0",
     "rimraf": "^3.0.2"
   },
   "dependencies": {
-    "lodash": "^4.17.21",
-    "typescript": "^4.7.4",
     "@vitejs/plugin-react": "^2.0.1",
+    "typescript": "^4.7.4",
     "vite": "^3.0.9",
     "vite-plugin-dts": "^1.4.1"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0"
-  },
-  "jest": {
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react/",
-      "<rootDir>/node_modules/react-dom/",
-      "<rootDir>/node_modules/react-addons-test-utils/"
-    ]
   }
 }
