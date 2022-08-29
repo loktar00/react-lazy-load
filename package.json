@@ -15,7 +15,7 @@
   "scripts": {
     "build": "npx vite build",
     "clean": "rimraf lib dist",
-    "lint": "eslint src/LazyLoad.jsx",
+    "lint": "eslint src/LazyLoad.tsx",
     "prepublish": "npm run clean && npm run build",
     "test": "jest"
   },
