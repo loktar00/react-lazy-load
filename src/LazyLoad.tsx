@@ -61,9 +61,8 @@ export default class LazyLoad extends Component<Props, State> {
 
         this.elementObserver = new IntersectionObserver(this.lazyLoadHandler, options);
 
-        const node = this.wrapper?.current;
-
-        if (node instanceof HTMLElement) {
+        const node = this.getRefElement();
+        if (node) {
             this.elementObserver.observe(node);
         }
     }
@@ -73,14 +72,27 @@ export default class LazyLoad extends Component<Props, State> {
     }
 
     componentWillUnmount() {
-        const node = this.wrapper?.current;
-        if (node && node instanceof HTMLElement) {
+        const node = this.getRefElement();
+        if (node) {
             this.elementObserver?.unobserve(node);
         }
     }
 
     getEventNode() {
         return scrollParent(this.wrapper?.current);
+    }
+
+    getRefElement(): HTMLElement | null {
+        const node = this.wrapper?.current as HTMLElement | null;
+        const { elementType } = this.props;
+        const toStringExpected = `[object html${elementType}element]`;
+        const toStringActual = Object.prototype.toString.call(node).toLocaleLowerCase();
+
+        if (toStringExpected === toStringActual) {
+            return node as HTMLElement;
+        }
+
+        return null;
     }
 
     lazyLoadHandler = (entries: IntersectionObserverEntry[]) => {
@@ -96,8 +108,8 @@ export default class LazyLoad extends Component<Props, State> {
             });
 
             // Stop observing
-            const node = this.wrapper?.current;
-            if (node && node instanceof HTMLElement) {
+            const node = this.getRefElement();
+            if (node) {
                 this.elementObserver?.unobserve(node);
             }
         }
