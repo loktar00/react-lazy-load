@@ -79,7 +79,7 @@ export default class LazyLoad extends Component<Props, State> {
     }
 
     getEventNode() {
-        return scrollParent(this.wrapper?.current);
+        return scrollParent(this.getRefElement());
     }
 
     getRefElement(): HTMLElement | null {
