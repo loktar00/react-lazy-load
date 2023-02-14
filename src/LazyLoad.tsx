@@ -85,7 +85,7 @@ export default class LazyLoad extends Component<Props, State> {
 
     getRefElement(): HTMLElement | null {
         const node = this.wrapper?.current as HTMLElement | null;
-        const regExp = /\[object HTML.*?Element\]/i;
+        const regExp = /\[object HTML[\S]*Element\]/i;
         const nodeToString = Object.prototype.toString.call(node);
 
         if (regExp.test(nodeToString)) {
