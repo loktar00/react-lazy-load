@@ -62,6 +62,7 @@ export default class LazyLoad extends Component<Props, State> {
         this.elementObserver = new IntersectionObserver(this.lazyLoadHandler, options);
 
         const node = this.getRefElement();
+
         if (node) {
             this.elementObserver.observe(node);
         }
@@ -84,11 +85,10 @@ export default class LazyLoad extends Component<Props, State> {
 
     getRefElement(): HTMLElement | null {
         const node = this.wrapper?.current as HTMLElement | null;
-        const { elementType } = this.props;
-        const toStringExpected = `[object html${elementType}element]`;
-        const toStringActual = Object.prototype.toString.call(node).toLocaleLowerCase();
+        const regExp = /\[object HTML.*?Element\]/i;
+        const nodeToString = Object.prototype.toString.call(node);
 
-        if (toStringExpected === toStringActual) {
+        if (regExp.test(nodeToString)) {
             return node as HTMLElement;
         }
 
