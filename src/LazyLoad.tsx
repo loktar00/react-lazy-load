@@ -10,6 +10,7 @@ import scrollParent from './utils/index.js';
 
 type Props = {
   children: ReactNode,
+  id?: string,
   className?: string,
   elementType?: string,
   height?: string | number,
@@ -26,6 +27,7 @@ type State = {
 export default class LazyLoad extends Component<Props, State> {
     static defaultProps = {
         elementType: 'div',
+        id: undefined,
         className: '',
         offset: 0,
         threshold: 0,
@@ -105,7 +107,7 @@ export default class LazyLoad extends Component<Props, State> {
 
     render() {
         const {
-            children, className, height, width, elementType
+            children, id, className, height, width, elementType
         } = this.props;
         const { visible } = this.state;
 
@@ -119,6 +121,7 @@ export default class LazyLoad extends Component<Props, State> {
         const componentElementType = elementType || 'div';
 
         return createElement(componentElementType, {
+            id,
             className: elClasses,
             style: elStyles,
             ref: this.wrapper
